@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Log.d(TAG, "onClick: clicked on: " + mStockName.get(position));
 
                 Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
+                Intent intent =  new Intent(mContext, BuySell.class);
+                intent.putExtra("Stock", mStockName.get(position));
+                mContext.startActivity(intent);
             }
         });
 
