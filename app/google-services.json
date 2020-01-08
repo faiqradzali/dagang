@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1059840171638",
+    "firebase_url": "https://fyp-dagang.firebaseio.com",
+    "project_id": "fyp-dagang",
+    "storage_bucket": "fyp-dagang.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059840171638:android:4afe1efc623ead1a220957",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059840171638-r1phn6jvtreqiuvloetsesu6a5dh1liq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgGm07x0bNoUITWD-Io6MB9cWlWngHbMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059840171638-r1phn6jvtreqiuvloetsesu6a5dh1liq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
