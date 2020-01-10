@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="339dp"
-        android:layout_height="575dp"
+        android:layout_width="348dp"
+        android:layout_height="641dp"
         android:background="@drawable/rectangle_6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,16 +19,16 @@
 
     <Button
         android:id="@+id/buyBtn"
-        android:layout_width="80dp"
-        android:layout_height="25dp"
-        android:background="@drawable/buttonbuy"
+        android:layout_width="94dp"
+        android:layout_height="36dp"
+        android:background="@drawable/greengradientbtn"
         android:text="Buy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.326"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.879" />
 
     <TextView
         android:id="@+id/stockName"
@@ -40,23 +40,23 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.194"
+        app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.103" />
 
     <Button
         android:id="@+id/buyBtn2"
-        android:layout_width="80dp"
-        android:layout_height="25dp"
-        android:background="@drawable/buttonsell"
+        android:layout_width="94dp"
+        android:layout_height="36dp"
+        android:background="@drawable/redgradientbtn"
         android:text="Sell"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.694"
+        app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.877" />
 
     <TextView
         android:id="@+id/textView9"
@@ -119,10 +119,10 @@
         app:layout_constraintVertical_bias="0.62" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/lowValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="openValue"
+        android:text="lowValue"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,10 +133,10 @@
         app:layout_constraintVertical_bias="0.725" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/highValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="openValue"
+        android:text="highVal"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,15 +156,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/closeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="openValue"
+        android:text="closeVal"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -176,13 +177,14 @@
 
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candle_stick_chart"
-        android:layout_width="263dp"
-        android:layout_height="211dp"
+        android:layout_width="338dp"
+        android:layout_height="269dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="@+id/textView16"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="@+id/textView16"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.145" />
 
     <View
         android:id="@+id/divider"
@@ -196,7 +198,7 @@
         app:layout_constraintVertical_bias="0.541" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/openValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="openValue"

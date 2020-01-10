@@ -57,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Log.d(TAG, "onClick: clicked on: " + mStockName.get(position));
 
                 Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent =  new Intent(mContext, BuySell.class);
+                Intent intent =  new Intent(mContext, Trade.class);
                 intent.putExtra("Stock", mStockName.get(position));
                 mContext.startActivity(intent);
             }
