@@ -22,6 +22,7 @@ public class Register extends Navigation {
     private static final String KEY_USER = "username";
     private static final String KEY_PASS = "password";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_INIT = "init";
 
     private EditText editTextUser;
     private EditText editTextPass;
@@ -63,5 +64,11 @@ public class Register extends Navigation {
                         Log.d(TAG, e.toString());
                     }
                 });
+
+        Map<String, Object> init_doc = new HashMap<>();
+        init_doc.put(KEY_INIT, "init");
+
+        db.collection("user_accounts").document(user).collection("portfolio").document("init").set(init_doc);
+        db.collection("user_accounts").document(user).collection("log").document("init").set(init_doc);
     }
 }
