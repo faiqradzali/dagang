@@ -2,10 +2,13 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -35,6 +38,10 @@ public class Trade extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
+
+        Button b = findViewById(R.id.buyBtn);
+
+
         final TextView view_close = findViewById(R.id.closeValue);
         final TextView view_open = findViewById(R.id.openValue);
         final TextView view_low = findViewById(R.id.lowValue);
@@ -115,10 +122,10 @@ public class Trade extends AppCompatActivity {
                             ArrayList<CandleEntry> yValsCandleStick = new ArrayList<CandleEntry>();
 
                             for(int i=1;i<=20;i++){
-                                float openF= parseFloat(split_open[i]);
-                                float highF= parseFloat(split_high[i]);
-                                float lowF= parseFloat(split_low[i]);
-                                float closeF= parseFloat(split_close[i]);
+                                float openF= parseFloat(split_open[split_open.length - i]);
+                                float highF= parseFloat(split_high[split_high.length - i]);
+                                float lowF= parseFloat(split_low[split_low.length - i]);
+                                float closeF= parseFloat(split_close[split_close.length - i]);
                                 yValsCandleStick.add(new CandleEntry(i, highF, lowF, openF, closeF));
                             }
 
@@ -166,5 +173,16 @@ public class Trade extends AppCompatActivity {
 
         requestQueue.add(objectRequest);
     }
+
+    public void goPopBuy (View view){
+        Intent i=new Intent(this, PopUpBuy.class);
+        String stock_name = getIntent().getStringExtra("Stock");
+        i.putExtra("stock",stock_name);
+        startActivity(i);
+
+
+    }
+
+
 }
 
