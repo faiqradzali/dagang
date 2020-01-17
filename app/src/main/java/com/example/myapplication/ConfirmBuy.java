@@ -38,17 +38,11 @@ public class ConfirmBuy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_buy);
 
-        final TextView view_close = findViewById(R.id.closeValue);
-        final TextView view_open = findViewById(R.id.openValue);
-        final TextView view_low = findViewById(R.id.lowValue);
-        final TextView view_high = findViewById(R.id.highValue);
-        final TextView view_buy = findViewById(R.id.buyValue);
+
         final TextView view_total= findViewById(R.id.totalVal);
+        final TextView view_total_size= findViewById(R.id.stockVal);
         final TextView view_fee= findViewById(R.id.brokerFee);
         final TextView view_bal = findViewById(R.id.cashBal);
-
-        final EditText view_size = findViewById(R.id.inputSize);
-
 
         Intent intent = getIntent();
         String stock_name = intent.getStringExtra("stock");
@@ -76,10 +70,8 @@ public class ConfirmBuy extends AppCompatActivity {
                             Log.d("abc", split_open.toString());
 
                             String last_close = split_close[split_close.length - 20];
-                            view_close.setText(last_close);
 
                             String last_open = split_open[split_open.length - 1];
-                            view_open.setText(last_open);
 
                             String high = response.getString("h");
                             high = high.substring(1, high.length() - 1);
@@ -90,23 +82,22 @@ public class ConfirmBuy extends AppCompatActivity {
                             String[] split_low = low.split(",");
 
                             String last_high = split_high[split_high.length - 1];
-                            view_high.setText(last_high);
-
                             String last_low = split_low[split_low.length - 1];
-                            view_low.setText(last_low);
 
                             // set the text of buy value
                             String prev_close = split_close[split_close.length - 19];
 
                             final float closeSub = (parseFloat(last_close)+((parseFloat(last_close)-parseFloat(prev_close))));
                             String buyView = String.valueOf(closeSub);
-                            view_buy.setText(buyView);
 
                             // set total
                             int a = parseInt(stock_size);
-                            float TotalVal = closeSub*a*100;
+                            int sizeTotal =a*100;
+                            float TotalVal = closeSub*sizeTotal;
                             String totalView = String.valueOf(TotalVal);
+                            String totalSize = ("x")+(String.valueOf(sizeTotal));
                             view_total.setText(totalView);
+                            view_total_size.setText(totalSize);
 
 
                             Log.d("Rest Responsse", last_close);
@@ -123,6 +114,11 @@ public class ConfirmBuy extends AppCompatActivity {
                 }
         );
         requestQueue.add(objectRequest);
+    }
+
+    public void okButton(View view){
+        Intent i = new Intent(getApplicationContext(),Stocklists.class);
+        startActivity(i);
     }
 
 

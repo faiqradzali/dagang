@@ -45,9 +45,6 @@ public class PopUpBuy extends AppCompatActivity {
         final TextView view_buy = findViewById(R.id.buyValue);
         final EditText view_size = findViewById(R.id.inputSize);
 
-        Button b = findViewById(R.id.buyBtn);
-
-
         final Intent intent = getIntent();
         String stock_name = intent.getStringExtra("stock");
         TextView view_stock_name = findViewById(R.id.stockName);
@@ -116,19 +113,18 @@ public class PopUpBuy extends AppCompatActivity {
         );
         requestQueue.add(objectRequest);
 
-        b.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String s = view_size.getText().toString();
-                String stock_name = getIntent().getStringExtra("Stock");
-                Intent i = new Intent(getApplicationContext(),ConfirmBuy.class);
-                i.putExtra("stock",stock_name);
-                i.putExtra("size",s);
-                startActivity(i);
-            }
-        });
     }
 
+
+    public void goToConfirm(View view){
+        EditText view_size = findViewById(R.id.inputSize);
+        String size = view_size.getText().toString();
+        TextView view_stock_name = findViewById(R.id.stockName);
+        String stock_name = view_stock_name.getText().toString();
+        Intent i = new Intent(getApplicationContext(),ConfirmBuy.class);
+        i.putExtra("stock",stock_name);
+        i.putExtra("size",size);
+        startActivity(i);
+    }
 }
 

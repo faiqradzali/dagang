@@ -39,9 +39,6 @@ public class Trade extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
 
-        Button b = findViewById(R.id.buyBtn);
-
-
         final TextView view_close = findViewById(R.id.closeValue);
         final TextView view_open = findViewById(R.id.openValue);
         final TextView view_low = findViewById(R.id.lowValue);
@@ -176,6 +173,7 @@ public class Trade extends AppCompatActivity {
 
     public void goPopBuy (View view){
         Intent i=new Intent(this, PopUpBuy.class);
+        TextView view_stock_name = findViewById(R.id.stockName);
         String stock_name = getIntent().getStringExtra("Stock");
         i.putExtra("stock",stock_name);
         startActivity(i);
