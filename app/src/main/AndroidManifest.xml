@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ConfirmBuy"></activity>
-        <activity android:name=".PopUpBuy" />
+        <activity android:name=".SellConfirm"></activity>
+        <activity android:name=".SellPopUp" />
+        <activity android:name=".BuyConfirm" />
+        <activity android:name=".BuyPopUp" />
         <activity android:name=".Register" />
         <activity android:name=".Stocklists">
             <intent-filter>
