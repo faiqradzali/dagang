@@ -10,6 +10,12 @@
             android:title="Dashboard" />
 
         <item
+            android:id="@+id/nav_screeners"
+            android:icon="@drawable/ic_portfolio"
+            android:title="Screeners"
+            />
+
+        <item
             android:id="@+id/nav_portfolio"
             android:icon="@drawable/ic_portfolio"
             android:title="Portfolio" />

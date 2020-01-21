@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,15 +16,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Stocklists extends AppCompatActivity {
+public class ScreenerStocklists extends AppCompatActivity {
     public DrawerLayout drawer;
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mNamesFull = new ArrayList<>();
@@ -71,26 +74,33 @@ public class Stocklists extends AppCompatActivity {
     private void initStockName() {
 
         String screener_name = getIntent().getStringExtra("Screener");
+        Log.d("screener name", screener_name);
         db.collection("screeners").document(screener_name).get()
-
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            Log.d(TAG, "onSuccess: screener exist");
-                            if (documentSnapshot != null) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
+//                        ArrayList <String> stocklist = new ArrayList<>();
+                        DocumentSnapshot document = task.getResult();
+                        List<String> stocklist = (List<String>) document.get(KEY_SCREENER);
+//                        String stockstring = document.getData().toString();
+//                        String[] stocklist = stockstring.split(", ");
 
+                        Log.d("myTag", stocklist.get(0));
 
-                                List<String> stocklist = (List <String>) documentSnapshot.get(KEY_SCREENER);
+                        mNames.addAll((stocklist));
+                        mNamesFull.addAll(mNames);
 
-                                Log.d(TAG, "initStockName: Populating stock list2");
-                                mNames.addAll((stocklist));
-                                mNamesFull.addAll(mNames);
-
-
-                            }
+                        initRecyclerView();
                         }
+                    }
+
+                )
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
                     }
                 });
         initRecyclerView();

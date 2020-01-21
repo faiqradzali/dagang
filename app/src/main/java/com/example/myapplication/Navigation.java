@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,6 +31,11 @@ public class Navigation extends AppCompatActivity {
         toggle.syncState();
 
 
+    }
+
+    public void goToScreener (View view){
+        Intent intent = new Intent (this, Screenerlists.class);
+        startActivity(intent);
     }
 
     @Override

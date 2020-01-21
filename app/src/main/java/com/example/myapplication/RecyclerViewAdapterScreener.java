@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
+public class RecyclerViewAdapterScreener extends RecyclerView.Adapter<RecyclerViewAdapterScreener.ViewHolder> implements Filterable {
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> stockName, ArrayList<String> stockNameFull) {
+    public RecyclerViewAdapterScreener(Context context, ArrayList<String> stockName, ArrayList<String> stockNameFull) {
         mContext = context;
         mStockName = stockName;
         mStockNameFull = stockNameFull;
@@ -32,7 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> mStockNameFull;
     private Context mContext;
 
-    public RecyclerViewAdapter() {
+    public RecyclerViewAdapterScreener() {
         mStockName = new ArrayList<>();
     }
 
@@ -54,11 +54,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
-                Log.d(TAG, "onClick RVA: clicked on: " + mStockName.get(position));
+                Log.d(TAG, "onClick RVS: clicked on: " + mStockName.get(position));
 
                 Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent =  new Intent(mContext, Trade.class);
-                intent.putExtra("Stock", mStockName.get(position));
+                Intent intent =  new Intent(mContext, ScreenerStocklists.class);
+                intent.putExtra("Screener", mStockName.get(position));
                 mContext.startActivity(intent);
             }
         });
