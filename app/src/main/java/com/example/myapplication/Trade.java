@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,11 +32,15 @@ import java.util.ArrayList;
 import static java.lang.Float.parseFloat;
 
 public class Trade extends AppCompatActivity {
-
+    String last_high;
+    String last_low;
+    String last_open;
+    String last_close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
+
         final TextView view_close = findViewById(R.id.closeValue);
         final TextView view_open = findViewById(R.id.openValue);
         final TextView view_low = findViewById(R.id.lowValue);
@@ -65,10 +71,10 @@ public class Trade extends AppCompatActivity {
                             String[] split_open = open.split(",");
                             Log.d("abc", split_open.toString());
 
-                            String last_close = split_close[split_close.length - 20];
+                            last_close = split_close[split_close.length - 20];
                             view_close.setText(last_close);
 
-                            String last_open = split_open[split_open.length - 1];
+                            last_open = split_open[split_open.length - 1];
                             view_open.setText(last_open);
 
                             String high = response.getString("h");
@@ -79,10 +85,10 @@ public class Trade extends AppCompatActivity {
                             low = low.substring(1, low.length() - 1);
                             String[] split_low = low.split(",");
 
-                            String last_high = split_high[split_high.length - 1];
+                            last_high = split_high[split_high.length - 1];
                             view_high.setText(last_high);
 
-                            String last_low = split_low[split_low.length - 1];
+                            last_low = split_low[split_low.length - 1];
                             view_low.setText(last_low);
 
                             //chart starting
@@ -115,10 +121,10 @@ public class Trade extends AppCompatActivity {
                             ArrayList<CandleEntry> yValsCandleStick = new ArrayList<CandleEntry>();
 
                             for(int i=1;i<=20;i++){
-                                float openF= parseFloat(split_open[i]);
-                                float highF= parseFloat(split_high[i]);
-                                float lowF= parseFloat(split_low[i]);
-                                float closeF= parseFloat(split_close[i]);
+                                float openF= parseFloat(split_open[split_open.length - i]);
+                                float highF= parseFloat(split_high[split_high.length - i]);
+                                float lowF= parseFloat(split_low[split_low.length - i]);
+                                float closeF= parseFloat(split_close[split_close.length - i]);
                                 yValsCandleStick.add(new CandleEntry(i, highF, lowF, openF, closeF));
                             }
 
@@ -166,5 +172,32 @@ public class Trade extends AppCompatActivity {
 
         requestQueue.add(objectRequest);
     }
+
+    public void goPopBuy (View view){
+        Intent i=new Intent(this, BuyPopUp.class);
+        TextView view_stock_name = findViewById(R.id.stockName);
+        String stock_name = getIntent().getStringExtra("Stock");
+        i.putExtra("stock",stock_name);
+        i.putExtra("open",last_open);
+        i.putExtra("close",last_close);
+        i.putExtra("high",last_high);
+        i.putExtra("low",last_low);
+        startActivity(i);
+    }
+
+    public void goPopSell (View view){
+        Intent i=new Intent(this, SellPopUp.class);
+        TextView view_stock_name = findViewById(R.id.stockName);
+        String stock_name = getIntent().getStringExtra("Stock");
+        i.putExtra("stock",stock_name);
+        i.putExtra("open",last_open);
+        i.putExtra("close",last_close);
+        i.putExtra("high",last_high);
+        i.putExtra("low",last_low);
+        Log.d("Open", last_open);
+        startActivity(i);
+    }
+
+
 }
 
