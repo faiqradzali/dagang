@@ -22,8 +22,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 public class Stocklists extends AppCompatActivity {
+    SessionManager sessionManager;
+
     public DrawerLayout drawer;
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mNamesFull = new ArrayList<>();

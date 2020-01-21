@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
     private static final String KEY_USER = "username";
     private static final String KEY_PASS = "password";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_MONEY = "capital";
 
     SessionManager sessionManager;
 
@@ -63,13 +64,15 @@ public class Login extends AppCompatActivity {
                             if (documentSnapshot != null) {
                                 String user = documentSnapshot.getString(KEY_USER);
                                 String pass = documentSnapshot.getString(KEY_PASS);
-                                String email = documentSnapshot.getString(KEY_PASS);
+                                String email = documentSnapshot.getString(KEY_EMAIL);
+                                String capital = documentSnapshot.getString(KEY_MONEY);
 
 
                                 if (password.equals(pass)) {
-                                    Log.d(TAG, "onSuccess: goingtodash");
-                                    sessionManager.createSession(user, email);
-                                    goToDashboard();
+                                    Toast.makeText(Login.this, "Logging in...", Toast.LENGTH_SHORT).show();
+                                    sessionManager.createSession(user, email, capital);
+                                    Intent i = new Intent(getApplicationContext(), Stocklists.class);
+                                    startActivity(i);;
                                 } else {
                                     Toast.makeText(Login.this, "Wrong password", Toast.LENGTH_SHORT).show();
                                 }

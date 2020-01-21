@@ -17,17 +17,19 @@
         <activity android:name=".BuyPopUp" />
         <activity android:name=".Register" />
         <activity android:name=".Stocklists">
+
+        </activity>
+        <activity android:name=".Dashboard" />
+        <activity
+            android:name=".Navigation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Dashboard" />
-        <activity
-            android:name=".Navigation"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login" />
         <activity android:name=".Trade" />
     </application>
 

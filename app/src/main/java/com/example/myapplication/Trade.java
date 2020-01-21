@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.lang.Float.parseFloat;
 
@@ -36,6 +37,8 @@ public class Trade extends AppCompatActivity {
     String last_low;
     String last_open;
     String last_close;
+    SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,11 @@ public class Trade extends AppCompatActivity {
         final TextView view_open = findViewById(R.id.openValue);
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
+
+        sessionManager = new SessionManager(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        String mMoney = user.get(sessionManager.MONEY);
+
 
 
         String stock_name = getIntent().getStringExtra("Stock");

@@ -4,23 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.text.DateFormat;
 import static java.lang.Float.parseFloat;
-import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
 public class BuyPopUp extends AppCompatActivity {
@@ -32,6 +26,18 @@ public class BuyPopUp extends AppCompatActivity {
     String close;
     String total;
     String size;
+    String balance;
+    String mMoney;
+    String currentDate;
+
+    SessionManager sessionManager;
+    private static final String KEY_DATE = "date";
+    private static final String KEY_PRICE = "price";
+    private static final String KEY_SIZE = "size";
+    private static final String KEY_STOCK = "stock";
+    private static final String KEY_TYPE = "type";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,14 @@ public class BuyPopUp extends AppCompatActivity {
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
         final TextView view_buy = findViewById(R.id.buyValue);
-        final EditText view_size = findViewById(R.id.inputSize);
+
+        currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+
+
+        sessionManager = new SessionManager(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        mMoney = user.get(sessionManager.MONEY);
+//        Log.d("Money", mMoney);
 
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
@@ -65,12 +78,27 @@ public class BuyPopUp extends AppCompatActivity {
         String s = view_size.getText().toString();
         int sizeTotal =parseInt(s)*100;
         float totalPrice = parseFloat(close) * sizeTotal;
+        float totalBalance = parseFloat(mMoney) - totalPrice;
+        balance = String.valueOf(totalBalance);
         total = String.valueOf(totalPrice);
         size = String.valueOf(sizeTotal);
         Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
         i.putExtra("stock",stock_name);
         i.putExtra("size",size);
         i.putExtra("total",total);
+        i.putExtra("balance",balance);
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        String mName = user.get(sessionManager.NAME);
+        Map<String, Object> log = new HashMap<>();
+        log.put(KEY_DATE, currentDate);
+        log.put(KEY_PRICE, close);
+        log.put(KEY_SIZE, size);
+        log.put(KEY_STOCK, stock_name);
+        log.put(KEY_TYPE, "buy");
+
+        db.collection("user_accounts").document(mName).collection("log").document().set(log);
+
         startActivity(i);
     }
 

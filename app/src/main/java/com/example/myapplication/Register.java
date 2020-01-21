@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ public class Register extends Navigation {
     private static final String KEY_PASS = "password";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_INIT = "init";
+    private static final String KEY_MONEY = "capital";
 
     private EditText editTextUser;
     private EditText editTextPass;
@@ -44,17 +46,21 @@ public class Register extends Navigation {
         String user = editTextUser.getText().toString();
         String pass = editTextPass.getText().toString();
         String email = editTextEmail.getText().toString();
+        String money = "10000";
 
         Map<String, Object> account = new HashMap<>();
         account.put(KEY_USER, user);
         account.put(KEY_PASS, pass);
         account.put(KEY_EMAIL, email);
+        account.put(KEY_MONEY, money);
 
         db.collection("user_accounts").document(user).set(account)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(Register.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(), Login.class);
+                        startActivity(i);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
