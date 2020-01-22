@@ -15,9 +15,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import static java.lang.Float.parseFloat;
 import static java.lang.Float.valueOf;
@@ -27,6 +30,10 @@ public class SellConfirm extends AppCompatActivity {
     String stock_name;
     String totalPrice;
     String stock_size;
+    String balance;
+    String mName;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,11 @@ public class SellConfirm extends AppCompatActivity {
         view_stock_name.setText(stock_name);
         view_total.setText(totalPrice);
         view_total_size.setText(stock_size);
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
+
+        db.collection("user_accounts").document(mName).update("capital",balance);
     }
 
     public void okButton(View view){

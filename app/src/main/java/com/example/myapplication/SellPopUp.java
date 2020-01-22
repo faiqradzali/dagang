@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,19 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.text.DateFormat;
 import static java.lang.Float.parseFloat;
-import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
 public class SellPopUp extends AppCompatActivity {
@@ -32,6 +32,18 @@ public class SellPopUp extends AppCompatActivity {
     String close;
     String total;
     String size;
+    String balance;
+    String mMoney;
+    String currentDate;
+
+    SessionManager sessionManager;
+    private static final String KEY_DATE = "date";
+    private static final String KEY_PRICE = "price";
+    private static final String KEY_SIZE = "size";
+    private static final String KEY_STOCK = "stock";
+    private static final String KEY_TYPE = "type";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +55,14 @@ public class SellPopUp extends AppCompatActivity {
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
         final TextView view_buy = findViewById(R.id.buyValue);
-        final EditText view_size = findViewById(R.id.inputSize);
+
+        currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+
+
+        sessionManager = new SessionManager(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        mMoney = user.get(sessionManager.MONEY);
+//        Log.d("Money", mMoney);
 
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
@@ -58,22 +77,80 @@ public class SellPopUp extends AppCompatActivity {
         view_high.setText(high);
         view_low.setText(low);
         view_buy.setText(close);
-
     }
-
 
     public void goToConfirm(View view){
         EditText view_size = findViewById(R.id.inputSize);
-        String s = view_size.getText().toString();
-        int sizeTotal =parseInt(s)*100;
-        float totalPrice = parseFloat(close) * sizeTotal;
-        total = String.valueOf(totalPrice);
+        final String s = view_size.getText().toString();
+        final int sizeTotal =parseInt(s)*100;
         size = String.valueOf(sizeTotal);
-        Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
-        i.putExtra("stock",stock_name);
-        i.putExtra("size",size);
-        i.putExtra("total",total);
-        startActivity(i);
+        Log.d("size in doc", KEY_SIZE);
+
+        if (sizeTotal<=parseInt(KEY_SIZE)){
+            Intent i = new Intent(getApplicationContext(), SellConfirm.class);
+            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
+            String newSize = String.valueOf(parseInt(KEY_SIZE)-sizeTotal);
+            float totalPrice = parseFloat(close) * sizeTotal;
+            double totalBalance = parseFloat(mMoney) + totalPrice;
+            balance = String.valueOf(totalBalance);
+            total = String.valueOf(totalPrice);
+
+            final HashMap<String, String> user = sessionManager.getUserDetail();
+            final String mName = user.get(sessionManager.NAME);
+            Map<String, Object> log = new HashMap<>();
+            log.put(KEY_DATE, currentDate);
+            log.put(KEY_PRICE, close);
+            log.put(KEY_SIZE, size);
+            log.put(KEY_STOCK, stock_name);
+            log.put(KEY_TYPE, "sell");
+
+            final Map<String, Object> portfolio = new HashMap<>();
+            portfolio.put(KEY_DATE,currentDate);
+            portfolio.put(KEY_PRICE, close);
+            portfolio.put(KEY_SIZE, size);
+
+
+
+
+            db.collection("user_accounts").document(mName).collection("log").document().set(log);
+            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                if (documentSnapshot != null) {
+                                    size = documentSnapshot.getString(KEY_SIZE);
+                                    String s = String.valueOf(parseInt(size)-sizeTotal);
+                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",s);
+
+                                }
+                                else {
+                                    Log.d("error", "else in not null snapshot ");
+                                }
+
+                            } else {
+                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(SellPopUp.this, "Error", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+            i.putExtra("stock",stock_name);
+            i.putExtra("size",size);
+            i.putExtra("total",total);
+            i.putExtra("balance",balance);
+            startActivity(i);
+
+        }
+        else{
+            Toast.makeText(SellPopUp.this, "Exceed number of stocks", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void cancelBtn(View view){

@@ -1,14 +1,19 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -76,8 +81,8 @@ public class BuyPopUp extends AppCompatActivity {
 
     public void goToConfirm(View view){
         EditText view_size = findViewById(R.id.inputSize);
-        String s = view_size.getText().toString();
-        int sizeTotal =parseInt(s)*100;
+        final String s = view_size.getText().toString();
+        final int sizeTotal =parseInt(s)*100;
         float totalPrice = parseFloat(close) * sizeTotal;
         double totalBalance = parseFloat(mMoney) - totalPrice;
         balance = String.valueOf(totalBalance);
@@ -97,8 +102,8 @@ public class BuyPopUp extends AppCompatActivity {
             i.putExtra("total",total);
             i.putExtra("balance",balance);
 
-            HashMap<String, String> user = sessionManager.getUserDetail();
-            String mName = user.get(sessionManager.NAME);
+            final HashMap<String, String> user = sessionManager.getUserDetail();
+            final String mName = user.get(sessionManager.NAME);
             Map<String, Object> log = new HashMap<>();
             log.put(KEY_DATE, currentDate);
             log.put(KEY_PRICE, close);
@@ -106,14 +111,40 @@ public class BuyPopUp extends AppCompatActivity {
             log.put(KEY_STOCK, stock_name);
             log.put(KEY_TYPE, "buy");
 
-            Map<String, Object> portfolio = new HashMap<>();
+            final Map<String, Object> portfolio = new HashMap<>();
             portfolio.put(KEY_DATE,currentDate);
             portfolio.put(KEY_PRICE, close);
             portfolio.put(KEY_SIZE, size);
 
             db.collection("user_accounts").document(mName).collection("log").document().set(log);
-            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
 
+            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                if (documentSnapshot != null) {
+                                    size = documentSnapshot.getString(KEY_SIZE);
+                                    String s = String.valueOf(sizeTotal+parseInt(size));
+                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",s);
+
+                                }
+                                else {
+                                    Log.d("error", "else in not null snapshot ");
+                                }
+
+                            } else {
+                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(BuyPopUp.this, "Error", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
             startActivity(i);
         }
     }
