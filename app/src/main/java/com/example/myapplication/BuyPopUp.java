@@ -106,7 +106,13 @@ public class BuyPopUp extends AppCompatActivity {
             log.put(KEY_STOCK, stock_name);
             log.put(KEY_TYPE, "buy");
 
+            Map<String, Object> portfolio = new HashMap<>();
+            portfolio.put(KEY_DATE,currentDate);
+            portfolio.put(KEY_PRICE, close);
+            portfolio.put(KEY_SIZE, size);
+
             db.collection("user_accounts").document(mName).collection("log").document().set(log);
+            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
 
             startActivity(i);
         }
