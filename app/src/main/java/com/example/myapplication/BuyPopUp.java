@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -78,28 +79,37 @@ public class BuyPopUp extends AppCompatActivity {
         String s = view_size.getText().toString();
         int sizeTotal =parseInt(s)*100;
         float totalPrice = parseFloat(close) * sizeTotal;
-        float totalBalance = parseFloat(mMoney) - totalPrice;
+        double totalBalance = parseFloat(mMoney) - totalPrice;
         balance = String.valueOf(totalBalance);
         total = String.valueOf(totalPrice);
         size = String.valueOf(sizeTotal);
-        Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
-        i.putExtra("stock",stock_name);
-        i.putExtra("size",size);
-        i.putExtra("total",total);
-        i.putExtra("balance",balance);
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        String mName = user.get(sessionManager.NAME);
-        Map<String, Object> log = new HashMap<>();
-        log.put(KEY_DATE, currentDate);
-        log.put(KEY_PRICE, close);
-        log.put(KEY_SIZE, size);
-        log.put(KEY_STOCK, stock_name);
-        log.put(KEY_TYPE, "buy");
+        if (parseFloat(mMoney) < totalPrice){
+            Intent i = new Intent(getApplicationContext(), BuyPopUp.class);
+            Toast.makeText(this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+            startActivity(i);
+        }
+        else{
+            Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
+            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
+            i.putExtra("stock",stock_name);
+            i.putExtra("size",size);
+            i.putExtra("total",total);
+            i.putExtra("balance",balance);
 
-        db.collection("user_accounts").document(mName).collection("log").document().set(log);
+            HashMap<String, String> user = sessionManager.getUserDetail();
+            String mName = user.get(sessionManager.NAME);
+            Map<String, Object> log = new HashMap<>();
+            log.put(KEY_DATE, currentDate);
+            log.put(KEY_PRICE, close);
+            log.put(KEY_SIZE, size);
+            log.put(KEY_STOCK, stock_name);
+            log.put(KEY_TYPE, "buy");
 
-        startActivity(i);
+            db.collection("user_accounts").document(mName).collection("log").document().set(log);
+
+            startActivity(i);
+        }
     }
 
     public void cancelBtn(View view){
