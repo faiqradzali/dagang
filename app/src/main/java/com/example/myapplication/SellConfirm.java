@@ -39,6 +39,10 @@ public class SellConfirm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_confirm);
 
+        sessionManager = new SessionManager(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
+
         final TextView view_total= findViewById(R.id.totalVal);
         final TextView view_total_size= findViewById(R.id.stockVal);
         final TextView view_bal = findViewById(R.id.cashBal);
@@ -48,15 +52,16 @@ public class SellConfirm extends AppCompatActivity {
         stock_name = intent.getStringExtra("stock");
         stock_size = "X"+(intent.getStringExtra("size"));
         totalPrice = intent.getStringExtra("total");
+        balance=intent.getStringExtra("capital");
+        Log.d("money: ", balance);
 
         view_stock_name.setText(stock_name);
         view_total.setText(totalPrice);
         view_total_size.setText(stock_size);
+        view_bal.setText(balance);
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        mName = user.get(sessionManager.NAME);
 
-        db.collection("user_accounts").document(mName).update("capital",balance);
+
     }
 
     public void okButton(View view){

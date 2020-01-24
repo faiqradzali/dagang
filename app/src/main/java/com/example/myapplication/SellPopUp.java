@@ -35,6 +35,7 @@ public class SellPopUp extends AppCompatActivity {
     String balance;
     String mMoney;
     String currentDate;
+    String mName;
 
     SessionManager sessionManager;
     private static final String KEY_DATE = "date";
@@ -80,77 +81,51 @@ public class SellPopUp extends AppCompatActivity {
     }
 
     public void goToConfirm(View view){
-        EditText view_size = findViewById(R.id.inputSize);
-        final String s = view_size.getText().toString();
-        final int sizeTotal =parseInt(s)*100;
-        size = String.valueOf(sizeTotal);
-        Log.d("size in doc", KEY_SIZE);
+        final HashMap<String, String> user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
+        Log.d("Size in doc: ", stock_name);
+        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                Intent i = new Intent(getApplicationContext(), SellConfirm.class);
+                                EditText view_size = findViewById(R.id.inputSize);
+                                final String s = view_size.getText().toString();
+                                int sizeTotal = parseInt(s) * 100;
+                                size = String.valueOf(sizeTotal);
+                                String sizeInDoc = documentSnapshot.getString(KEY_SIZE);
+                                int x = parseInt(sizeInDoc);
 
-        if (sizeTotal<=parseInt(KEY_SIZE)){
-            Intent i = new Intent(getApplicationContext(), SellConfirm.class);
-            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
-            String newSize = String.valueOf(parseInt(KEY_SIZE)-sizeTotal);
-            float totalPrice = parseFloat(close) * sizeTotal;
-            double totalBalance = parseFloat(mMoney) + totalPrice;
-            balance = String.valueOf(totalBalance);
-            total = String.valueOf(totalPrice);
+                                if (sizeTotal <= x) {
+                                    String newSize = String.valueOf(x - sizeTotal);
+                                    Log.d("Size in doc: ", newSize);
+                                    float totalPrice = parseFloat(close) * sizeTotal;
+                                    double totalBalance = parseFloat(mMoney) + totalPrice;
+                                    balance = String.valueOf(totalBalance);
+                                    total = String.valueOf(totalPrice);
 
-            final HashMap<String, String> user = sessionManager.getUserDetail();
-            final String mName = user.get(sessionManager.NAME);
-            Map<String, Object> log = new HashMap<>();
-            log.put(KEY_DATE, currentDate);
-            log.put(KEY_PRICE, close);
-            log.put(KEY_SIZE, size);
-            log.put(KEY_STOCK, stock_name);
-            log.put(KEY_TYPE, "sell");
+                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",newSize);
+                                    db.collection("user_accounts").document(mName).update("capital",balance);
 
-            final Map<String, Object> portfolio = new HashMap<>();
-            portfolio.put(KEY_DATE,currentDate);
-            portfolio.put(KEY_PRICE, close);
-            portfolio.put(KEY_SIZE, size);
-
-
-
-
-            db.collection("user_accounts").document(mName).collection("log").document().set(log);
-            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                if (documentSnapshot != null) {
-                                    size = documentSnapshot.getString(KEY_SIZE);
-                                    String s = String.valueOf(parseInt(size)-sizeTotal);
-                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",s);
-
+                                    i.putExtra("stock", stock_name);
+                                    i.putExtra("size", size);
+                                    i.putExtra("total", total);
+                                    Log.d("money: ", balance);
+                                    i.putExtra("capital", balance);
+                                    startActivity(i);
                                 }
-                                else {
-                                    Log.d("error", "else in not null snapshot ");
+                                else{
+                                    Toast.makeText(SellPopUp.this, "Size exceed limit.", Toast.LENGTH_SHORT).show();
                                 }
-
                             } else {
-                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
+                                Log.d("error", "else in not null snapshot ");
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(SellPopUp.this, "Error", Toast.LENGTH_SHORT).show();
 
                         }
-                    });
-            i.putExtra("stock",stock_name);
-            i.putExtra("size",size);
-            i.putExtra("total",total);
-            i.putExtra("balance",balance);
-            startActivity(i);
-
-        }
-        else{
-            Toast.makeText(SellPopUp.this, "Exceed number of stocks", Toast.LENGTH_SHORT).show();
-
-        }
+                    }
+                });
     }
 
     public void cancelBtn(View view){
