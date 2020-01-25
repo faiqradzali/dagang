@@ -1,11 +1,17 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.firestore.auth.User;
 
@@ -32,26 +38,38 @@ public class PortfolioListViewAdapter extends ArrayAdapter<PortfolioObject> {
         if (portfolioObject != null) {
             TextView stockName = convertView.findViewById(R.id.p_stock_name);
             TextView lotSize = convertView.findViewById(R.id.p_lot_size);
-            TextView buyPrice = convertView.findViewById(R.id.p_buy_price);
-            TextView currentPrice = convertView.findViewById(R.id.p_current_price);
+            TextView profitValue = convertView.findViewById(R.id.p_profit_value);
+            TextView profitPercent = convertView.findViewById(R.id.p_profit_percent);
 
             stockName.setText(portfolioObject.getStock());
             lotSize.setText(portfolioObject.getLotSize());
-            buyPrice.setText(portfolioObject.getBuyPrice());
-            currentPrice.setText(portfolioObject.getClose());
 
-//            if (firstName != null) {
-//                firstName.setText(user.getFirstName());
-//            }
-//            if (lastName != null) {
-//                lastName.setText((user.getLastName()));
-//            }
-//            if (favFood != null) {
-//                favFood.setText((user.getFavFood()));
-//            }
+            double buy_price=Double.parseDouble(portfolioObject.getBuyPrice());
+            double lot_size=Double.parseDouble(portfolioObject.getLotSize());
+            double close_price=Double.parseDouble(portfolioObject.getClose());
+
+            double profitCalc = (close_price*lot_size) - (buy_price*lot_size);
+            double percentCalc = profitCalc/(buy_price*lot_size);
+
+            if (profitCalc > 0) {
+                profitValue.setTextColor(Color.parseColor("#12e34a") );
+                profitPercent.setTextColor(Color.parseColor("#12e34a") );
+            }
+            else if (profitCalc < 0){
+                profitValue.setTextColor(Color.parseColor("#e31212") );
+                profitPercent.setTextColor(Color.parseColor("#e31212") );
+            }
+
+            profitValue.setText(String.format("%.2f", profitCalc));
+            profitPercent.setText(String.format("%.2f", percentCalc)+"%");
+
         }
+
+
 
         return convertView;
     }
+
+
 
 }

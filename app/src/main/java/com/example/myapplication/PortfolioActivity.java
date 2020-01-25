@@ -1,8 +1,16 @@
 package com.example.myapplication;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,15 +36,15 @@ public class PortfolioActivity extends BaseActivity {
     SessionManager sessionManager;
     ArrayList<PortfolioObject> portfolioList = new ArrayList<>();
     ListView listView;
+    ProgressDialog nDialog;
 
-    public interface VolleyCallback{
-        void onSuccess(String result);
-    }
+
 
     public void generatePortfolio(String stockname, String size, String buyprice){
         final String stockName = stockname;
         final String lotSize = size;
         final String buyPrice = buyprice;
+
         Log.d(TAG, "Name passed " + stockName);
 
         final String[] split_close;
@@ -69,19 +77,57 @@ public class PortfolioActivity extends BaseActivity {
 
                             Log.d(TAG, "onResponse: " + lotSize);
                             portfolioList.add(portfolioObject);
-                            Log.d(TAG, "onResponse list: " + portfolioList.get(0).getBuyPrice().toString());
+
 
                             if (response != null) {
                                 Log.d(TAG, "generateList: called");
                                 PortfolioListViewAdapter adapter = new PortfolioListViewAdapter(getApplicationContext(), R.layout.layout_listportfolio, portfolioList);
-                                Log.d(TAG + "adapter", adapter.toString());
+                                Log.d(TAG, adapter.toString());
                                 listView = (ListView) findViewById(R.id.list_view);
+                                listView.setAdapter(adapter);
 
 
-                                if (listView != null) {
-                                    Log.d(TAG + "listView", "passed");
-                                    listView.setAdapter(adapter);
+
+
+                                double totalValue = 0;
+                                double totalProfit = 0;
+                                for(int i=0;i<portfolioList.size();i++){
+                                    double buyPrice=Double.parseDouble(portfolioList.get(i).getBuyPrice());
+                                    double lotSize=Double.parseDouble(portfolioList.get(i).getLotSize());
+                                    double closePrice=Double.parseDouble(portfolioList.get(i).getClose());
+
+                                    totalValue += (closePrice * lotSize);
+                                    totalProfit += ((closePrice * lotSize)-(buyPrice * lotSize));
                                 }
+
+                                final TextView viewProfit = findViewById(R.id.text_profit);
+                                final TextView viewValue = findViewById(R.id.text_value);
+
+
+                                viewProfit.setText(String.format("%.2f", totalProfit));
+                                viewValue.setText(String.format("%.2f", totalValue));
+
+
+                                nDialog.dismiss();
+
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        portfolioList.get(position);
+                                        Toast.makeText(PortfolioActivity.this, portfolioList.get(position).getStock(), Toast.LENGTH_SHORT).show();
+
+                                        Intent intent =  new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
+                                        intent.putExtra("StockName", portfolioList.get(position).getStock());
+                                        intent.putExtra("ClosePrice", portfolioList.get(position).getClose());
+                                        intent.putExtra("LotSize", portfolioList.get(position).getLotSize());
+                                        intent.putExtra("BuyPrice", portfolioList.get(position).getBuyPrice());
+                                        PortfolioActivity.this.startActivity(intent);
+
+                                    }
+
+                                });
+
                             }
                             
                         } catch (JSONException e) {
@@ -106,32 +152,27 @@ public class PortfolioActivity extends BaseActivity {
         );
 
         requestQueue.add(objectRequest);
-
-
-
     }
 
-    public void generateList(){
 
 
-        Log.d(TAG, "generateList: authorized");
-        PortfolioListViewAdapter adapter = new PortfolioListViewAdapter(getApplicationContext(), R.layout.layout_listportfolio, portfolioList);
-        listView = (findViewById(R.id.list_view));
-        listView.setAdapter(adapter);
 
-    }
-
-    public interface ResponseCallback {
-
-        public void onSuccess (String result);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio);
+
+
+        nDialog = new ProgressDialog(PortfolioActivity.this);
+        nDialog.setMessage("Loading..");
+        nDialog.setTitle("Get Data");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
 
 //        sessionManager = new SessionManager(this);
 //        sessionManager.checkLogin();
@@ -151,50 +192,12 @@ public class PortfolioActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                         for (DocumentSnapshot snapshot : queryDocumentSnapshots)
-
                             generatePortfolio(snapshot.getId(), snapshot.getString("size"), snapshot.getString("price"));
-
-
-//                        if (portfolioList != null){
-//                            PortfolioListViewAdapter adapter =  new PortfolioListViewAdapter(getApplicationContext(), R.layout.layout_listportfolio, portfolioList);
-//                            listView = (findViewById(R.id.listView));
-//                            listView.setAdapter(adapter);}
-
-
                     }
                 }
-
-
-
-
-
-
-
-
                 );
-
-
-
-
-
-
-//        int numRows = data.getCount();
-//        if(numRows == 0){
-//            Toast.makeText(ViewListContents.this,"The Database is empty  :(.",Toast.LENGTH_LONG).show();
-//        }else{
-//            int i=0;
-//            while(data.moveToNext()){
-//                user = new PortfolioObject(data.getString(1),data.getString(2),data.getString(3));
-//                userList.add(i,user);
-//                System.out.println(data.getString(1)+" "+data.getString(2)+" "+data.getString(3));
-//                System.out.println(userList.get(i).getFirstName());
-//                i++;
-//            }
-//            ThreeColumn_ListAdapter adapter =  new ThreeColumn_ListAdapter(this,R.layout.list_adapter_view, userList);
-//            listView = (ListView) findViewById(R.id.listView);
-//            listView.setAdapter(adapter);
-//        }
     }
+
+
 }

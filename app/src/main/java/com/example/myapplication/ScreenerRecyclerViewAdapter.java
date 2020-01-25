@@ -57,7 +57,7 @@ public class ScreenerRecyclerViewAdapter extends RecyclerView.Adapter<ScreenerRe
                 Log.d(TAG, "onClick RVS: clicked on: " + mStockName.get(position));
 
                 Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent =  new Intent(mContext, ScreenerStocklists.class);
+                Intent intent =  new Intent(mContext, ScreenerDetailActivity.class);
                 intent.putExtra("Screener", mStockName.get(position));
                 mContext.startActivity(intent);
             }

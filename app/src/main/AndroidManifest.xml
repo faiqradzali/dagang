@@ -11,29 +11,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PortfolioDetailActivity" android:theme="@style/AppTheme">
+        <activity android:name=".PortfolioDetailActivity"
+            android:label="Portfolio">
 
         </activity>
         <activity android:name=".SellConfirm" />
         <activity android:name=".SellPopUp" />
         <activity android:name=".BuyConfirm" />
         <activity android:name=".BuyPopUp" />
-        <activity android:name=".Register" />
+        <activity android:name=".Register" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".StocklistActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity android:name=".Dashboard" />
         <activity
             android:name=".BaseActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login" />
-        <activity android:name=".Trade" />
-        <activity android:name=".PortfolioActivity">
+        <activity android:name=".Login" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Trade"
+            android:label="Trade"/>
+        <activity android:name=".PortfolioActivity"
+            android:label="Portfolio">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
