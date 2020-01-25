@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterScreener extends RecyclerView.Adapter<RecyclerViewAdapterScreener.ViewHolder> implements Filterable {
+public class StocklistRecyclerViewAdapter extends RecyclerView.Adapter<StocklistRecyclerViewAdapter.ViewHolder> implements Filterable {
 
-    private static final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "StocklistRecyclerV";
 
-    public RecyclerViewAdapterScreener(Context context, ArrayList<String> stockName, ArrayList<String> stockNameFull) {
+    public StocklistRecyclerViewAdapter(Context context, ArrayList<String> stockName, ArrayList<String> stockNameFull) {
         mContext = context;
         mStockName = stockName;
         mStockNameFull = stockNameFull;
@@ -32,7 +32,7 @@ public class RecyclerViewAdapterScreener extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<String> mStockNameFull;
     private Context mContext;
 
-    public RecyclerViewAdapterScreener() {
+    public StocklistRecyclerViewAdapter() {
         mStockName = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class RecyclerViewAdapterScreener extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listscreener, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -54,11 +54,11 @@ public class RecyclerViewAdapterScreener extends RecyclerView.Adapter<RecyclerVi
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
-                Log.d(TAG, "onClick RVS: clicked on: " + mStockName.get(position));
+                Log.d(TAG, "onClick RVA: clicked on: " + mStockName.get(position));
 
                 Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent =  new Intent(mContext, ScreenerStocklists.class);
-                intent.putExtra("Screener", mStockName.get(position));
+                Intent intent =  new Intent(mContext, Trade.class);
+                intent.putExtra("Stock", mStockName.get(position));
                 mContext.startActivity(intent);
             }
         });

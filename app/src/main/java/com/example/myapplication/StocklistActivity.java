@@ -7,68 +7,44 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.HashMap;
 
-public class Stocklists extends AppCompatActivity {
+public class StocklistActivity extends BaseActivity {
     SessionManager sessionManager;
 
     public DrawerLayout drawer;
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mNamesFull = new ArrayList<>();
-    RecyclerViewAdapter adapter;
+    StocklistRecyclerViewAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static final String TAG = "Navigation";
+    private static final String TAG = "BaseActivity";
 
 
     //    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav);
+        setContentView(R.layout.activity_stocklist);
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
 
         initStockName();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        adapter = new RecyclerViewAdapter(this, mNames, mNamesFull);
+        adapter = new StocklistRecyclerViewAdapter(this, mNames, mNamesFull);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -4,22 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import static java.lang.Float.parseFloat;
 import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
@@ -48,7 +35,7 @@ public class SellConfirm extends AppCompatActivity {
     }
 
     public void okButton(View view){
-        Intent i = new Intent(getApplicationContext(),Stocklists.class);
+        Intent i = new Intent(getApplicationContext(), StocklistActivity.class);
         startActivity(i);
     }
 

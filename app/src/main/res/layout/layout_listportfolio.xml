@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/p_stock_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:text="First"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"></TextView>
+
+    <TextView
+        android:id="@+id/p_buy_price"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:text="First"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"></TextView>
+
+    <TextView
+        android:id="@+id/p_lot_size"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:text="First"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"></TextView>
+
+    <TextView
+        android:id="@+id/p_current_price"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="25"
+        android:text="First"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"></TextView>
+
+</LinearLayout>
