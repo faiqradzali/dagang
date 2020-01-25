@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,19 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.text.DateFormat;
 import static java.lang.Float.parseFloat;
-import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
 public class SellPopUp extends AppCompatActivity {
@@ -32,6 +32,19 @@ public class SellPopUp extends AppCompatActivity {
     String close;
     String total;
     String size;
+    String balance;
+    String mMoney;
+    String currentDate;
+    String mName;
+
+    SessionManager sessionManager;
+    private static final String KEY_DATE = "date";
+    private static final String KEY_PRICE = "price";
+    private static final String KEY_SIZE = "size";
+    private static final String KEY_STOCK = "stock";
+    private static final String KEY_TYPE = "type";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +56,14 @@ public class SellPopUp extends AppCompatActivity {
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
         final TextView view_buy = findViewById(R.id.buyValue);
-        final EditText view_size = findViewById(R.id.inputSize);
+
+        currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
+
+
+        sessionManager = new SessionManager(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        mMoney = user.get(sessionManager.MONEY);
+//        Log.d("Money", mMoney);
 
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
@@ -58,22 +78,54 @@ public class SellPopUp extends AppCompatActivity {
         view_high.setText(high);
         view_low.setText(low);
         view_buy.setText(close);
-
     }
 
-
     public void goToConfirm(View view){
-        EditText view_size = findViewById(R.id.inputSize);
-        String s = view_size.getText().toString();
-        int sizeTotal =parseInt(s)*100;
-        float totalPrice = parseFloat(close) * sizeTotal;
-        total = String.valueOf(totalPrice);
-        size = String.valueOf(sizeTotal);
-        Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
-        i.putExtra("stock",stock_name);
-        i.putExtra("size",size);
-        i.putExtra("total",total);
-        startActivity(i);
+        final HashMap<String, String> user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
+        Log.d("Size in doc: ", stock_name);
+        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                Intent i = new Intent(getApplicationContext(), SellConfirm.class);
+                                EditText view_size = findViewById(R.id.inputSize);
+                                final String s = view_size.getText().toString();
+                                int sizeTotal = parseInt(s) * 100;
+                                size = String.valueOf(sizeTotal);
+                                String sizeInDoc = documentSnapshot.getString(KEY_SIZE);
+                                int x = parseInt(sizeInDoc);
+
+                                if (sizeTotal <= x) {
+                                    String newSize = String.valueOf(x - sizeTotal);
+                                    Log.d("Size in doc: ", newSize);
+                                    float totalPrice = parseFloat(close) * sizeTotal;
+                                    double totalBalance = parseFloat(mMoney) + totalPrice;
+                                    balance = String.valueOf(totalBalance);
+                                    total = String.valueOf(totalPrice);
+
+                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",newSize);
+                                    db.collection("user_accounts").document(mName).update("capital",balance);
+
+                                    i.putExtra("stock", stock_name);
+                                    i.putExtra("size", size);
+                                    i.putExtra("total", total);
+                                    Log.d("money: ", balance);
+                                    i.putExtra("capital", balance);
+                                    startActivity(i);
+                                }
+                                else{
+                                    Toast.makeText(SellPopUp.this, "Size exceed limit.", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.d("error", "else in not null snapshot ");
+                            }
+
+                        }
+                    }
+                });
     }
 
     public void cancelBtn(View view){

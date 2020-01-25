@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +9,9 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +26,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,13 +38,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
 
 public class Trade extends AppCompatActivity {
     String last_high;
     String last_low;
     String last_open;
     String last_close;
+    String stock_name;
+    String mName;
+
+    HashMap<String, String> user;
     SessionManager sessionManager;
+
+
+    private static final String KEY_DATE = "date";
+    private static final String KEY_PRICE = "price";
+    private static final String KEY_SIZE = "size";
+    private static final String KEY_STOCK = "stock";
+    private static final String KEY_TYPE = "type";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +205,7 @@ public class Trade extends AppCompatActivity {
     public void goPopBuy (View view){
         Intent i=new Intent(this, BuyPopUp.class);
         TextView view_stock_name = findViewById(R.id.stockName);
-        String stock_name = getIntent().getStringExtra("Stock");
+        stock_name = getIntent().getStringExtra("Stock");
         i.putExtra("stock",stock_name);
         i.putExtra("open",last_open);
         i.putExtra("close",last_close);
@@ -194,18 +215,42 @@ public class Trade extends AppCompatActivity {
     }
 
     public void goPopSell (View view){
-        Intent i=new Intent(this, SellPopUp.class);
-        TextView view_stock_name = findViewById(R.id.stockName);
-        String stock_name = getIntent().getStringExtra("Stock");
-        i.putExtra("stock",stock_name);
-        i.putExtra("open",last_open);
-        i.putExtra("close",last_close);
-        i.putExtra("high",last_high);
-        i.putExtra("low",last_low);
-        Log.d("Open", last_open);
-        startActivity(i);
+
+        user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
+        stock_name = getIntent().getStringExtra("Stock");
+        Log.d("name", stock_name);
+        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                TextView view_stock_name = findViewById(R.id.stockName);
+                                String stock_name = getIntent().getStringExtra("Stock");
+                                Intent i = new Intent(getApplicationContext(),SellPopUp.class);
+                                i.putExtra("stock",stock_name);
+                                i.putExtra("open",last_open);
+                                i.putExtra("close",last_close);
+                                i.putExtra("high",last_high);
+                                i.putExtra("low",last_low);
+                                Log.d("Open", last_open);
+                                startActivity(i);
+                            }
+                            else {
+                                Log.d("error", "else in not null snapshot ");
+                            }
+
+                        } else {
+                            Toast.makeText(Trade.this, "Can't retrieve stock", Toast.LENGTH_SHORT).show();                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Trade.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
-
-
 }
 
