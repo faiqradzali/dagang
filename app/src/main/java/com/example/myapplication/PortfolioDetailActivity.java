@@ -10,16 +10,22 @@ import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import java.util.HashMap;
+
 
 public class PortfolioDetailActivity extends BaseActivity {
 
     public DrawerLayout drawer;
     TextView stockName, closePrice, lotSize, avgPrice, costValue, marketValue, profitRm, profitPercent;
+    SessionManager sessionManager;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_detail);
@@ -64,7 +70,7 @@ public class PortfolioDetailActivity extends BaseActivity {
         profitPercent.setText(""+profit_percent+"%");
 
         Button BuySell = findViewById(R.id.buySellBtn);
-// Register the onClick listener with the implementation above
+
         BuySell.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {

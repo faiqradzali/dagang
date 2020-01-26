@@ -22,6 +22,8 @@
         <item>Expert</item>
     </string-array>
 
+    <string name="screener_title">Screener</string>
+
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 

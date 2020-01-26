@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Login extends AppCompatActivity{
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ProgressDialog nDialog;
 
     private static final String TAG = "Login";
 
@@ -54,6 +56,12 @@ public class Login extends AppCompatActivity{
     }
 
     public void loadUser(View v) {
+        nDialog = new ProgressDialog(Login.this);
+        nDialog.setMessage("Verifying username and password..");
+        nDialog.setTitle("Logging in..");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
         final String username = editTextUsername.getText().toString();
         final String password = editTextPassword.getText().toString();
         db.collection("user_accounts").document(username).get()
@@ -67,12 +75,14 @@ public class Login extends AppCompatActivity{
                                 String email = documentSnapshot.getString(KEY_EMAIL);
                                 String capital = documentSnapshot.getString(KEY_MONEY);
 
+                                nDialog.hide();
 
                                 if (password.equals(pass)) {
-                                    Toast.makeText(Login.this, "Logging in...", Toast.LENGTH_SHORT).show();
+
                                     sessionManager.createSession(user, email, capital);
                                     Intent i = new Intent(getApplicationContext(), StocklistActivity.class);
-                                    startActivity(i);;
+
+                                    startActivity(i);
                                 } else {
                                     Toast.makeText(Login.this, "Wrong password", Toast.LENGTH_SHORT).show();
                                 }

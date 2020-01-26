@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,7 @@ public class ScreenerlistActivity extends BaseActivity {
     //    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setContentView(R.layout.activity_screenerlist);
 
         initStockName();
     }
@@ -31,7 +32,7 @@ public class ScreenerlistActivity extends BaseActivity {
 
     private void initStockName(){
         Log.d(TAG, "initStockName: Populating stock list");
-        mNames.addAll(Arrays.asList("All-Time High", "Price Cross MA20"));
+        mNames.addAll(Arrays.asList("All-Time High", "Parabolic SAR Rising"));
         mNamesFull.addAll(mNames);
 
         initRecyclerView();
@@ -41,7 +42,8 @@ public class ScreenerlistActivity extends BaseActivity {
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         adapter = new ScreenerRecyclerViewAdapter(this, mNames, mNamesFull);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

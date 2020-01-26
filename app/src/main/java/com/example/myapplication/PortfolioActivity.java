@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PortfolioActivity extends BaseActivity {
 
@@ -174,13 +175,13 @@ public class PortfolioActivity extends BaseActivity {
         nDialog.setCancelable(true);
         nDialog.show();
 
-//        sessionManager = new SessionManager(this);
-//        sessionManager.checkLogin();
-//
-//        HashMap<String, String> user = sessionManager.getUserDetail();
-//        String mName = user.get(sessionManager.NAME);
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
-        String mName = "faiq";
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        String mName = user.get(sessionManager.NAME);
+
+//        String mName = "faiq";
 
 
 
