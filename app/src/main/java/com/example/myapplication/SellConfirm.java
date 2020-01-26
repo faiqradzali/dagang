@@ -26,7 +26,7 @@ import static java.lang.Float.parseFloat;
 import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
-public class SellConfirm extends AppCompatActivity {
+public class SellConfirm extends BaseActivity {
     String stock_name;
     String totalPrice;
     String stock_size;
@@ -65,7 +65,7 @@ public class SellConfirm extends AppCompatActivity {
     }
 
     public void okButton(View view){
-        Intent i = new Intent(getApplicationContext(),Stocklists.class);
+        Intent i = new Intent(getApplicationContext(),Dashboard.class);
         startActivity(i);
     }
 

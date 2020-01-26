@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.text.DateFormat;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-public class SellPopUp extends AppCompatActivity {
+public class SellPopUp extends BaseActivity {
 
     String stock_name;
     String open;
@@ -36,6 +37,7 @@ public class SellPopUp extends AppCompatActivity {
     String mMoney;
     String currentDate;
     String mName;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     SessionManager sessionManager;
     private static final String KEY_DATE = "date";
@@ -103,8 +105,8 @@ public class SellPopUp extends AppCompatActivity {
                                     Log.d("Size in doc: ", newSize);
                                     float totalPrice = parseFloat(close) * sizeTotal;
                                     double totalBalance = parseFloat(mMoney) + totalPrice;
-                                    balance = String.valueOf(totalBalance);
-                                    total = String.valueOf(totalPrice);
+                                    balance = df2.format(totalBalance);
+                                    total = df2.format(totalPrice);
 
                                     db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",newSize);
                                     db.collection("user_accounts").document(mName).update("capital",balance);

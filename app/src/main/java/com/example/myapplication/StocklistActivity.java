@@ -33,8 +33,8 @@ public class StocklistActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stocklist);
 
-//        sessionManager = new SessionManager(this);
-//        sessionManager.checkLogin();
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
         initStockName();
     }

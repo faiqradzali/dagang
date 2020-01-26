@@ -40,7 +40,7 @@ import java.util.HashMap;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
-public class Trade extends AppCompatActivity {
+public class Trade extends BaseActivity {
     String last_high;
     String last_low;
     String last_open;
@@ -100,7 +100,7 @@ public class Trade extends AppCompatActivity {
                             String[] split_open = open.split(",");
                             Log.d("abc", split_open.toString());
 
-                            last_close = split_close[split_close.length - 20];
+                            last_close = split_close[split_close.length - 1];
                             view_close.setText(last_close);
 
                             last_open = split_open[split_open.length - 1];
@@ -149,12 +149,15 @@ public class Trade extends AppCompatActivity {
 
                             ArrayList<CandleEntry> yValsCandleStick = new ArrayList<CandleEntry>();
 
+                            int j=20;
                             for(int i=1;i<=20;i++){
-                                float openF= parseFloat(split_open[split_open.length - i]);
-                                float highF= parseFloat(split_high[split_high.length - i]);
-                                float lowF= parseFloat(split_low[split_low.length - i]);
-                                float closeF= parseFloat(split_close[split_close.length - i]);
+
+                                float openF= parseFloat(split_open[split_open.length - j]);
+                                float highF= parseFloat(split_high[split_high.length - j]);
+                                float lowF= parseFloat(split_low[split_low.length - j]);
+                                float closeF= parseFloat(split_close[split_close.length - j]);
                                 yValsCandleStick.add(new CandleEntry(i, highF, lowF, openF, closeF));
+                                j--;
                             }
 
                             CandleDataSet set1 = new CandleDataSet(yValsCandleStick, "DataSet 1");

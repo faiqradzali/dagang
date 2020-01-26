@@ -10,6 +10,7 @@
  * AndroidManifest.xml. This is just a base class.
  */
 package com.example.myapplication;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -115,14 +116,29 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.item1:
-//                // handle it
-//                break;
-//            case R.id.item2:
-//                // do whatever
-//                break;
+            case R.id.nav_dashboard:
+                Intent intent1 = new Intent(this, Dashboard.class);
+                this.startActivity(intent1);
+                break;
+
+            case R.id.nav_screeners:
+                Intent intent2 = new Intent(this,ScreenerlistActivity.class);
+                this.startActivity(intent2);
+                break;
+            case R.id.nav_stocklist:
+                Intent intent3 = new Intent(this,StocklistActivity.class);
+                this.startActivity(intent3);
+                break;
+
+            case R.id.nav_log:
+                // do whatever
+                break;
+            case R.id.nav_portfolio:
+                Intent intent4 = new Intent(this,PortfolioActivity.class);
+                this.startActivity(intent4);// do whatever
+                break;
             // and so on...
         }
-        return false;
+        return true;
     }
 }
