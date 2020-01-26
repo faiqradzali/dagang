@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="100">
@@ -10,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="25"
         android:text="STOCK"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        android:textStyle="bold"></TextView>
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
 <!--    <TextView-->
 <!--        android:id="@+id/p_buy_price"-->
@@ -28,26 +31,25 @@
         android:id="@+id/p_lot_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
         android:layout_toRightOf="@id/p_stock_name"
         android:layout_weight="25"
         android:text="LotSize"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"></TextView>
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp"></TextView>
 
     <TextView
         android:id="@+id/p_profit_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginRight="52dp"
         android:layout_weight="25"
         android:text="Profit"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"></TextView>
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="0dp"></TextView>
 
     <TextView
         android:id="@+id/p_profit_percent"
@@ -58,14 +60,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="290dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
         android:layout_weight="25"
         android:text="Profit%"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"></TextView>
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p_profit_value"></TextView>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

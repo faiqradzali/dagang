@@ -100,12 +100,12 @@ public class PortfolioActivity extends BaseActivity {
                                     totalProfit += ((closePrice * lotSize)-(buyPrice * lotSize));
                                 }
 
-                                final TextView viewProfit = findViewById(R.id.text_profit);
+//                                final TextView viewProfit = findViewById(R.id.text_profit);
                                 final TextView viewValue = findViewById(R.id.text_value);
 
 
-                                viewProfit.setText(String.format("%.2f", totalProfit));
-                                viewValue.setText(String.format("%.2f", totalValue));
+//                                viewProfit.setText(String.format("%.2f", totalProfit));
+                                viewValue.setText(String.format("%.2f", totalValue) + "\n" + String.format("%.2f", totalProfit) + "\n" + "0.00" + "\n" + "0.00");
 
 
                                 nDialog.dismiss();
