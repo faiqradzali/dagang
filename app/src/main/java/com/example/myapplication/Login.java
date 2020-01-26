@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity{
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 

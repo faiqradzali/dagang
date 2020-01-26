@@ -22,8 +22,10 @@ import java.util.Map;
 import java.text.DateFormat;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
-public class BuyPopUp extends AppCompatActivity {
+public class BuyPopUp extends BaseActivity {
 
     String stock_name;
     String open;
@@ -35,6 +37,7 @@ public class BuyPopUp extends AppCompatActivity {
     String balance;
     String mMoney;
     String currentDate;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     SessionManager sessionManager;
     private static final String KEY_DATE = "date";
@@ -85,8 +88,9 @@ public class BuyPopUp extends AppCompatActivity {
         final int sizeTotal =parseInt(s)*100;
         float totalPrice = parseFloat(close) * sizeTotal;
         double totalBalance = parseFloat(mMoney) - totalPrice;
-        balance = String.valueOf(totalBalance);
-        total = String.valueOf(totalPrice);
+        balance = df2.format(totalBalance);
+        Log.d("check balance", balance);
+        total = df2.format(totalPrice);
         size = String.valueOf(sizeTotal);
 
         if (parseFloat(mMoney) < totalPrice){

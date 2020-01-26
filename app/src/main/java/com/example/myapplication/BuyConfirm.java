@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,7 @@ import static java.lang.Float.parseFloat;
 import static java.lang.Float.valueOf;
 import static java.lang.Integer.parseInt;
 
-public class BuyConfirm extends AppCompatActivity {
+public class BuyConfirm extends BaseActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     String stock_name;
     String totalPrice;
@@ -71,7 +72,7 @@ public class BuyConfirm extends AppCompatActivity {
     }
 
     public void okButton(View view) {
-        Intent i = new Intent(getApplicationContext(), Stocklists.class);
+        Intent i = new Intent(getApplicationContext(), Dashboard.class);
         startActivity(i);
     }
 
