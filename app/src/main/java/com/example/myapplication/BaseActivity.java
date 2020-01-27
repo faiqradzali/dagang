@@ -129,13 +129,13 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
                 Intent intent3 = new Intent(this,StocklistActivity.class);
                 this.startActivity(intent3);
                 break;
-
             case R.id.nav_log:
-                // do whatever
+                Intent intent4 = new Intent(this,LogActivity.class);
+                this.startActivity(intent4);// do whatever
                 break;
             case R.id.nav_portfolio:
-                Intent intent4 = new Intent(this,PortfolioActivity.class);
-                this.startActivity(intent4);// do whatever
+                Intent intent5 = new Intent(this,PortfolioActivity.class);
+                this.startActivity(intent5);// do whatever
                 break;
             // and so on...
         }

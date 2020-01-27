@@ -76,29 +76,29 @@ public class BuyConfirm extends BaseActivity {
         startActivity(i);
     }
 
-    //log read part
-    public void loadLogs(View v) {
-        db.collection("user_accounts").document(mName).collection("log").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        String data = "";
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Note note = documentSnapshot.toObject(Note.class);
-
-                            String date = note.getCurrentDate();
-                            String size = note.getSize();
-                            String close = note.getClose();
-                            String type = note.getType();
-                            String stockname = note.getStock_name();
-
-                            data += "date: " + date + "\nstock: " + stockname + "\nsize: " + size + "close: " + close + "\ntype: " + type;
-
-                        }
-                        //recylcer view here
-                        //textViewData.setText(data);
-                    }
-                });
-    }
+//    //log read part
+//    public void loadLogs(View v) {
+//        db.collection("user_accounts").document(mName).collection("log").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        String data = "";
+//                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+//                            Note note = documentSnapshot.toObject(Note.class);
+//
+//                            String date = note.getCurrentDate();
+//                            String size = note.getSize();
+//                            String close = note.getClose();
+//                            String type = note.getType();
+//                            String stockname = note.getStock_name();
+//
+//                            data += "date: " + date + "\nstock: " + stockname + "\nsize: " + size + "close: " + close + "\ntype: " + type;
+//
+//                        }
+//                        //recylcer view here
+//                        //textViewData.setText(data);
+//                    }
+//                });
+//    }
 }
 

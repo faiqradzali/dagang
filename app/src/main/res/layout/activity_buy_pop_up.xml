@@ -8,8 +8,9 @@
 
     <TextView
         android:id="@+id/whiteBg"
-        android:layout_width="348dp"
-        android:layout_height="641dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:background="@drawable/rectangle_6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +91,7 @@
         app:layout_constraintVertical_bias="0.568" />
 
     <Button
-        android:id="@+id/sellBtn"
+        android:id="@+id/buyBtn"
         android:layout_width="94dp"
         android:layout_height="36dp"
         android:background="@drawable/greengradientbtn"
@@ -221,21 +222,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.247" />
-
-    <TextView
-        android:id="@+id/topText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trading Simulator"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/closeValue"

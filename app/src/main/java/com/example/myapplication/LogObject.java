@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import com.google.firebase.firestore.Exclude;
 
-public class Note {
+public class LogObject {
     private String documentID;
     private String currentDate;
     private String close;
@@ -10,7 +10,7 @@ public class Note {
     private String stock_name;
     private String type;
 
-    public Note(){}
+    public LogObject(){}
 
     @Exclude
     public String getDocumentID(){
@@ -21,7 +21,7 @@ public class Note {
         this.documentID = documentID;
     }
 
-    public Note(String currentDate, String close, String size, String stock_name, String type){
+    public LogObject(String currentDate, String stock_name, String close, String size, String type){
         this.currentDate = currentDate;
         this.close=close;
         this.size=size;

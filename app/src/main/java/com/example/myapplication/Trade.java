@@ -130,22 +130,22 @@ public class Trade extends BaseActivity {
 
                             YAxis yAxis = candleStickChart.getAxisLeft();
                             YAxis rightAxis = candleStickChart.getAxisRight();
-                            yAxis.setDrawGridLines(false);
+                            yAxis.setDrawGridLines(true);
                             rightAxis.setDrawGridLines(false);
                             candleStickChart.requestDisallowInterceptTouchEvent(true);
 
                             XAxis xAxis = candleStickChart.getXAxis();
 
-                            xAxis.setDrawGridLines(false);// disable x axis grid lines
+                            xAxis.setDrawGridLines(true);// disable x axis grid lines
                             xAxis.setDrawLabels(false);
-                            rightAxis.setTextColor(Color.WHITE);
+                            rightAxis.setTextColor(Color.BLACK);
                             yAxis.setDrawLabels(false);
                             xAxis.setGranularity(1f);
                             xAxis.setGranularityEnabled(true);
                             xAxis.setAvoidFirstLastClipping(true);
 
                             Legend l = candleStickChart.getLegend();
-                            l.setEnabled(false);
+                            l.setEnabled(true);
 
                             ArrayList<CandleEntry> yValsCandleStick = new ArrayList<CandleEntry>();
 
@@ -160,7 +160,7 @@ public class Trade extends BaseActivity {
                                 j--;
                             }
 
-                            CandleDataSet set1 = new CandleDataSet(yValsCandleStick, "DataSet 1");
+                            CandleDataSet set1 = new CandleDataSet(yValsCandleStick, "Trends");
                             set1.setColor(Color.rgb(80, 80, 80));
                             set1.setShadowColor(Color.rgb(220,220,220));
                             set1.setShadowWidth(0.8f);

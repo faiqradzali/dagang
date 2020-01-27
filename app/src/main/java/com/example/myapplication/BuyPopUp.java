@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class BuyPopUp extends BaseActivity {
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ProgressDialog nDialog;
 
 
     @Override
@@ -83,6 +85,12 @@ public class BuyPopUp extends BaseActivity {
     }
 
     public void goToConfirm(View view){
+        nDialog = new ProgressDialog(BuyPopUp.this);
+        nDialog.setMessage("Locating stock in database..");
+        nDialog.setTitle("Approving transaction..");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
         EditText view_size = findViewById(R.id.inputSize);
         final String s = view_size.getText().toString();
         final int sizeTotal =parseInt(s)*100;
@@ -100,7 +108,7 @@ public class BuyPopUp extends BaseActivity {
         }
         else{
             Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
-            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
             i.putExtra("stock",stock_name);
             i.putExtra("size",size);
             i.putExtra("total",total);

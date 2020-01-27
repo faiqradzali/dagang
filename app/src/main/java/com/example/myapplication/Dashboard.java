@@ -33,11 +33,9 @@ import static java.lang.Float.parseFloat;
 public class Dashboard extends BaseActivity {
 
     private TextView name;
+    private TextView capital;
     private Button btn_logout;
     SessionManager sessionManager;
-    String last_high;
-    String last_low;
-    String last_open;
     String last_close;
 
     @Override
@@ -49,13 +47,15 @@ public class Dashboard extends BaseActivity {
         sessionManager.checkLogin();
 
         name = findViewById(R.id.text_name);
+        capital = findViewById(R.id.moneyVal);
         btn_logout = findViewById(R.id.logoutBtn);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mName = user.get(sessionManager.NAME);
-        String mEmail = user.get(sessionManager.EMAIL);
+        String mMoney = user.get(sessionManager.MONEY);
 
         name.setText(mName);
+        capital.setText("Capital: "+mMoney);
         FBMIndexGraph();
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +91,7 @@ public class Dashboard extends BaseActivity {
 
                             last_close = split_close[split_close.length - 1];
                             TextView view_close= findViewById(R.id.closeVal);
-                            view_close.setText(last_close);
-
-                            last_open = split_open[split_open.length - 1];
-                            //view_open.setText(last_open);
+                            view_close.setText("FTSE Malaysia KLCI (KLSE) | "+last_close);
 
                             String high = response.getString("h");
                             high = high.substring(1, high.length() - 1);
@@ -104,38 +101,32 @@ public class Dashboard extends BaseActivity {
                             low = low.substring(1, low.length() - 1);
                             String[] split_low = low.split(",");
 
-                            last_high = split_high[split_high.length - 1];
-                            //view_high.setText(last_high);
-
-                            last_low = split_low[split_low.length - 1];
-                            //view_low.setText(last_low);
-
                             //chart starting
                             CandleStickChart candleStickChart = findViewById(R.id.fbm_chart);
                             candleStickChart.setHighlightPerDragEnabled(true);
 
-                            candleStickChart.setDrawBorders(true);
+                            candleStickChart.setDrawBorders(false);
 
                             candleStickChart.setBorderColor(Color.rgb(220,220,220));
 
                             YAxis yAxis = candleStickChart.getAxisLeft();
                             YAxis rightAxis = candleStickChart.getAxisRight();
-                            yAxis.setDrawGridLines(false);
+                            yAxis.setDrawGridLines(true);
                             rightAxis.setDrawGridLines(false);
                             candleStickChart.requestDisallowInterceptTouchEvent(true);
 
                             XAxis xAxis = candleStickChart.getXAxis();
 
-                            xAxis.setDrawGridLines(false);// disable x axis grid lines
+                            xAxis.setDrawGridLines(true);// disable x axis grid lines
                             xAxis.setDrawLabels(false);
-                            rightAxis.setTextColor(Color.WHITE);
+                            rightAxis.setTextColor(Color.BLACK);
                             yAxis.setDrawLabels(false);
                             xAxis.setGranularity(1f);
                             xAxis.setGranularityEnabled(true);
                             xAxis.setAvoidFirstLastClipping(true);
 
                             Legend l = candleStickChart.getLegend();
-                            l.setEnabled(false);
+                            l.setEnabled(true);
 
                             ArrayList<CandleEntry> yValsCandleStick = new ArrayList<CandleEntry>();
                             Log.d("array length: ", String.valueOf(split_open.length));
@@ -150,15 +141,16 @@ public class Dashboard extends BaseActivity {
                                 j--;
                             }
 
-                            CandleDataSet set1 = new CandleDataSet(yValsCandleStick, "DataSet 1");
+                            CandleDataSet set1 = new CandleDataSet(yValsCandleStick, "Trends");
                             set1.setColor(Color.rgb(80, 80, 80));
                             set1.setShadowColor(Color.rgb(220,220,220));
                             set1.setShadowWidth(0.8f);
+                            set1.setShadowColor(0);
                             set1.setDecreasingColor(Color.rgb(211,33,45));
                             set1.setDecreasingPaintStyle(Paint.Style.FILL);
                             set1.setIncreasingColor(Color.rgb(144,238,144));
                             set1.setIncreasingPaintStyle(Paint.Style.FILL);
-                            set1.setNeutralColor(Color.LTGRAY);
+                            set1.setNeutralColor(Color.BLACK);
                             set1.setDrawValues(false);
 
                             // create a data object with the datasets

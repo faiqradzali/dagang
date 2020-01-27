@@ -8,8 +8,9 @@
 
     <TextView
         android:id="@+id/whiteBg"
-        android:layout_width="352dp"
-        android:layout_height="682dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:background="@drawable/rectangle_6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,12 +26,12 @@
         android:onClick="goPopBuy"
         android:text="Buy"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.296"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.879" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.87" />
 
     <TextView
         android:id="@+id/stockName"
@@ -55,12 +56,12 @@
         android:onClick="goPopSell"
         android:text="Sell"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.712"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.877" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.87" />
 
     <TextView
         android:id="@+id/textView9"
@@ -70,12 +71,12 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.703" />
 
     <TextView
         android:id="@+id/textView10"
@@ -85,12 +86,12 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.755" />
 
     <TextView
         android:id="@+id/textView8"
@@ -100,80 +101,81 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.67" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.317"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.644" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="241dp"
         android:text="Open"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.31"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.953" />
 
     <TextView
         android:id="@+id/lowValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lowValue"
+        android:text="0.003"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.574"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.703" />
 
     <TextView
         android:id="@+id/highValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="highVal"
+        android:text="0.003"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.574"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.67" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.644" />
 
     <TextView
         android:id="@+id/closeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="closeVal"
+        android:text="0.003"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.574"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.755" />
 
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candle_stick_chart"
-        android:layout_width="338dp"
+        android:layout_width="0dp"
         android:layout_height="269dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.125" />
 
     <View
         android:id="@+id/divider"
@@ -182,21 +184,21 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/openValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="openValue"
+        android:text="0.003"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.574"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.619" />
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.569" />
 </androidx.constraintlayout.widget.ConstraintLayout>
