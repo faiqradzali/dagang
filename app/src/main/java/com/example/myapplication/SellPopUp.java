@@ -45,6 +45,7 @@ public class SellPopUp extends BaseActivity {
     private static final String KEY_SIZE = "size";
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
+    private static final String KEY_NOTES= "notes";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -116,6 +117,15 @@ public class SellPopUp extends BaseActivity {
                                     i.putExtra("total", total);
                                     Log.d("money: ", balance);
                                     i.putExtra("capital", balance);
+
+                                    Map<String, Object> log = new HashMap<>();
+                                    log.put(KEY_DATE, currentDate);
+                                    log.put(KEY_PRICE, close);
+                                    log.put(KEY_SIZE, size);
+                                    log.put(KEY_STOCK, stock_name);
+                                    log.put(KEY_TYPE, "SELL");
+                                    log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
+                                    db.collection("user_accounts").document(mName).collection("log").document().set(log);
                                     startActivity(i);
                                 }
                                 else{

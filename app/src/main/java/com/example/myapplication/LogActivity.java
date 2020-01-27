@@ -80,18 +80,12 @@ public class LogActivity extends BaseActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mName = user.get(sessionManager.NAME);
 
-
-        ListView LogListView = (ListView)findViewById(R.id.list_view_log);
-        Log.d("name", mName);
-
         db.collection("user_accounts").document(mName).collection("log").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            LogObject note = documentSnapshot.toObject(LogObject.class);
-
                             String gDate = documentSnapshot.getString("date");
                             String gStock = documentSnapshot.getString("stock");
                             String gPrice = documentSnapshot.getString("price");
@@ -99,18 +93,11 @@ public class LogActivity extends BaseActivity {
                             String gType = documentSnapshot.getString("type");
 
                             LogObject logObject = new LogObject(gDate,gStock,gPrice,gSize,gType);
-
                             LogList.add(logObject);
 
-
-
-//                            Log.d("ewe",
-//                                    "\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
+                            Log.d("ewe",
+                                    "\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
                         }
-                        for(LogObject pd : LogList) {
-                            Log.d("ewe", "\nDate: " + pd.getCurrentDate() + "\nDescription: " + pd.getStock_name() + "\nPrice: "+pd.getClose());
-                        }
-
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
                         listView.setAdapter(adapter);

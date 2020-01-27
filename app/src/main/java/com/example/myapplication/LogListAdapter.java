@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +34,17 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
         mViewResourceId = textViewResourceId;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+
+    public View getView(int position, View convertView, final ViewGroup parent) {
         convertView = mInflater.inflate(mViewResourceId, null);
+        ImageButton noteBtn = (ImageButton) convertView.findViewById(R.id.simpleImageButton);
+        noteBtn.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       Intent zoom=new Intent(parent.getContext(), NoteActivity.class);
+                       parent.getContext().startActivity(zoom);
+                   }});
+
 
         LogObject logObject = logList.get(position);
         Log.d("test", logObject.getCurrentDate());
@@ -50,15 +62,32 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
 
             tvDate.setText(logObject.getCurrentDate());
             tvStock.setText(logObject.getStock_name());
-            tvPrice.setText(logObject.getClose());
-            tvSize.setText(logObject.getSize());
+            tvPrice.setText("RM "+logObject.getClose());
+            tvSize.setText(logObject.getSize()+" units");
             tvType.setText(logObject.getType());
+
+            String colorType = logObject.getType();
+
+            if (colorType.equals("BUY")) {
+                tvType.setTextColor(Color.parseColor("#9cd85b") );
+            }
+            else if (colorType.equals("SELL")){
+                tvType.setTextColor(Color.parseColor("#ff4a36") );
+            }
+            else if (colorType.equals("buy")){
+                tvType.setTextColor(Color.parseColor("#ff4a36") );
+            }
+            else if (colorType.equals("sell")){
+                tvType.setTextColor(Color.parseColor("#9cd85b") );
+            }
         }
 
 
 
         return convertView;
     }
+
+
 
 
 

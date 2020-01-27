@@ -46,6 +46,7 @@ public class BuyPopUp extends BaseActivity {
     private static final String KEY_SIZE = "size";
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
+    private static final String KEY_NOTES = "notes";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     ProgressDialog nDialog;
 
@@ -121,7 +122,8 @@ public class BuyPopUp extends BaseActivity {
             log.put(KEY_PRICE, close);
             log.put(KEY_SIZE, size);
             log.put(KEY_STOCK, stock_name);
-            log.put(KEY_TYPE, "buy");
+            log.put(KEY_TYPE, "BUY");
+            log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
 
             final Map<String, Object> portfolio = new HashMap<>();
             portfolio.put(KEY_DATE,currentDate);

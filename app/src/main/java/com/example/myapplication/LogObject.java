@@ -9,6 +9,7 @@ public class LogObject {
     private String size;
     private String stock_name;
     private String type;
+    private String notes;
 
     public LogObject(){}
 
@@ -49,4 +50,7 @@ public class LogObject {
         return stock_name;
     }
 
+    public String getNotes() {
+        return notes;
+    }
 }
