@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +68,16 @@ public class PortfolioDetailActivity extends BaseActivity {
         profitRm.setText(""+profit_rm);
 
         profitPercent = findViewById(R.id.pd_profit_percent);
-        profitPercent.setText(""+profit_percent+"%");
+        profitPercent.setText(String.format("%.2f", profit_percent)+"%");
+
+        if (market_value > cost_value){
+            profitRm.setTextColor(getResources().getColor(R.color.colorPositive));
+            profitPercent.setTextColor(getResources().getColor(R.color.colorPositive));
+        }
+        else if (market_value < cost_value){
+            profitRm.setTextColor(getResources().getColor(R.color.colorNegative));
+            profitPercent.setTextColor(getResources().getColor(R.color.colorNegative));
+        }
 
         Button BuySell = findViewById(R.id.buySellBtn);
 

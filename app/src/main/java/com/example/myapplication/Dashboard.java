@@ -36,7 +36,7 @@ public class Dashboard extends BaseActivity {
     private TextView capital;
     private Button btn_logout;
     SessionManager sessionManager;
-    String last_close;
+    Double last_close, last_2days_close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Dashboard extends BaseActivity {
         sessionManager.checkLogin();
 
         name = findViewById(R.id.text_name);
-        capital = findViewById(R.id.moneyVal);
+        capital = findViewById(R.id.d_trading_limit);
         btn_logout = findViewById(R.id.logoutBtn);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -55,7 +55,7 @@ public class Dashboard extends BaseActivity {
         String mMoney = user.get(sessionManager.MONEY);
 
         name.setText(mName);
-        capital.setText("Capital: "+mMoney);
+        capital.setText("Trading Limit: "+mMoney);
         FBMIndexGraph();
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -89,9 +89,18 @@ public class Dashboard extends BaseActivity {
                             String[] split_open = open.split(",");
                             Log.d("abc", split_open.toString());
 
-                            last_close = split_close[split_close.length - 1];
+                            last_2days_close = Double.parseDouble(split_close[split_close.length - 2]);
+                            last_close = Double.parseDouble(split_close[split_close.length - 1]);
                             TextView view_close= findViewById(R.id.closeVal);
-                            view_close.setText("FTSE Malaysia KLCI (KLSE) | "+last_close);
+
+                            if (last_close < last_2days_close)
+                                view_close.setTextColor(Color.parseColor("#e31212"));
+                            else if (last_close > last_2days_close)
+                                view_close.setTextColor(Color.parseColor("#12e34a"));
+
+                            view_close.setText(""+last_close);
+
+
 
                             String high = response.getString("h");
                             high = high.substring(1, high.length() - 1);
@@ -165,7 +174,7 @@ public class Dashboard extends BaseActivity {
 
 
 
-                            Log.d("Rest Responsse", last_close);
+
 
 
                         } catch (JSONException e) {

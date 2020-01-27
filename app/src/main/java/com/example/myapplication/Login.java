@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity{
                                 if (password.equals(pass)) {
 
                                     sessionManager.createSession(user, email, capital);
-                                    Intent i = new Intent(getApplicationContext(), StocklistActivity.class);
+                                    Intent i = new Intent(getApplicationContext(), Dashboard.class);
 
                                     startActivity(i);
                                 } else {
