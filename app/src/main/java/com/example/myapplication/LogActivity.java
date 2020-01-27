@@ -79,6 +79,8 @@ public class LogActivity extends BaseActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mName = user.get(sessionManager.NAME);
+
+
         ListView LogListView = (ListView)findViewById(R.id.list_view_log);
         Log.d("name", mName);
 
@@ -109,7 +111,7 @@ public class LogActivity extends BaseActivity {
                             Log.d("ewe", "\nDate: " + pd.getCurrentDate() + "\nDescription: " + pd.getStock_name() + "\nPrice: "+pd.getClose());
                         }
 
-                        LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_listportfolio, LogList);
+                        LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
                         listView.setAdapter(adapter);
 
@@ -117,13 +119,6 @@ public class LogActivity extends BaseActivity {
                 });
 
     }
-//        ListView LogListView = (ListView)findViewById(R.id.list_view_log);
-////        LogObject log1 = new LogObject("20/1","AEON","1.21","200","buy");
-////        LogObject log2 = new LogObject("20/1","Awew","1.21","200","buy");
-////
-////
-////        LogList.add(log1);
-////        LogList.add(log2);
 
 }
 
