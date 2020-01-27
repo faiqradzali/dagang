@@ -25,6 +25,7 @@ public class NoteActivity extends BaseActivity {
     SessionManager sessionManager;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String mName;
+    private String docId;
     private static final String KEY_NOTES = "notes";
 
     @Override
@@ -33,11 +34,15 @@ public class NoteActivity extends BaseActivity {
         setContentView(R.layout.activity_note);
         sessionManager = new SessionManager(this);
 
+        final Intent intent = getIntent();
         HashMap<String, String> user = sessionManager.getUserDetail();
         mName = user.get(sessionManager.NAME);
+        docId = intent.getStringExtra("docId");
+        Log.d("ID of document: ", docId);
+
 
         final TextView tvN = findViewById(R.id.tvNotes);
-        db.collection("user_accounts").document(mName).collection("log").document().get()
+        db.collection("user_accounts").document(mName).collection("log").document(docId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -60,9 +65,11 @@ public class NoteActivity extends BaseActivity {
         TextView tvN = findViewById(R.id.tvNotes);
         String s = tv.getText().toString();
         tvN.setText(s);
+        final Intent intent = getIntent();
+        docId = intent.getStringExtra("docId");
         Log.d("name", mName);
 
-        db.collection("user_accounts").document(mName).collection("log").document().update("notes", s);
+        db.collection("user_accounts").document(mName).collection("log").document(docId).update("notes", s);
     }
 
     public void gotoLog(View view){

@@ -19,8 +19,24 @@
         android:textAlignment="center"
         android:textColor="#8C939B"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/simpleImageButton"
         app:layout_constraintTop_toBottomOf="@+id/log_stock" />
+
+    <TextView
+        android:id="@+id/spacing"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_below="@+id/log_stock"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#8C939B"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/log_date"
+        app:layout_constraintStart_toEndOf="@+id/simpleImageButton"
+        app:layout_constraintTop_toBottomOf="@+id/log_date" />
 
     <TextView
         android:id="@+id/log_stock"
@@ -33,8 +49,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toEndOf="@+id/simpleImageButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -42,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
         android:layout_toRightOf="@id/log_stock"
         android:gravity="center"
         android:text="1.43"
@@ -57,8 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/log_price"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
         android:layout_toRightOf="@id/log_date"
         android:gravity="center"
         android:text="700"
@@ -71,26 +87,27 @@
         android:id="@+id/log_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:gravity="center"
         android:text="BUY"
         android:textColor="#9CFDA4"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/simpleImageButton"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/simpleImageButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/iconfindeeee"
+        android:background="@drawable/notes"
         android:onClick="gotoNotes"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

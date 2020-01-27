@@ -38,13 +38,6 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
     public View getView(int position, View convertView, final ViewGroup parent) {
         convertView = mInflater.inflate(mViewResourceId, null);
         ImageButton noteBtn = (ImageButton) convertView.findViewById(R.id.simpleImageButton);
-        noteBtn.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       Intent zoom=new Intent(parent.getContext(), NoteActivity.class);
-                       parent.getContext().startActivity(zoom);
-                   }});
-
 
         LogObject logObject = logList.get(position);
         Log.d("test", logObject.getCurrentDate());
@@ -83,7 +76,14 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
         }
 
 
-
+        final String docId = logObject.getDocumentID();
+        noteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent zoom=new Intent(parent.getContext(), NoteActivity.class);
+                zoom.putExtra("docId",docId);
+                parent.getContext().startActivity(zoom);
+            }});
         return convertView;
     }
 

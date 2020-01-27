@@ -91,12 +91,14 @@ public class LogActivity extends BaseActivity {
                             String gPrice = documentSnapshot.getString("price");
                             String gSize = documentSnapshot.getString("size");
                             String gType = documentSnapshot.getString("type");
+                            String gID = documentSnapshot.getId();
 
-                            LogObject logObject = new LogObject(gDate,gStock,gPrice,gSize,gType);
+
+                            LogObject logObject = new LogObject(gID,gDate,gStock,gPrice,gSize,gType);
                             LogList.add(logObject);
 
                             Log.d("ewe",
-                                    "\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
+                                    "ID"+gID+"\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
                         }
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);

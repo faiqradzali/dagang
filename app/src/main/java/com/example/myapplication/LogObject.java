@@ -13,7 +13,7 @@ public class LogObject {
 
     public LogObject(){}
 
-    @Exclude
+
     public String getDocumentID(){
         return documentID;
     }
@@ -23,6 +23,15 @@ public class LogObject {
     }
 
     public LogObject(String currentDate, String stock_name, String close, String size, String type){
+        this.currentDate = currentDate;
+        this.close=close;
+        this.size=size;
+        this.stock_name=stock_name;
+        this.type=type;
+    }
+
+    public LogObject(String docId,String currentDate, String stock_name, String close, String size, String type){
+        this.documentID = docId;
         this.currentDate = currentDate;
         this.close=close;
         this.size=size;
