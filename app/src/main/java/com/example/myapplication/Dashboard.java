@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,6 +23,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,8 +42,13 @@ public class Dashboard extends BaseActivity {
     private Button btn_logout;
     private String mMoney;
     private String mName;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     SessionManager sessionManager;
     Double last_close, last_2days_close;
+    Activity activity;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +64,28 @@ public class Dashboard extends BaseActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         mName = user.get(sessionManager.NAME);
-        mMoney = user.get(sessionManager.MONEY);
-        Log.d("money user: ", mMoney);
 
         name.setText(mName);
-        capital.setText("Trading Limit: "+mMoney);
+
+        db.collection("user_accounts").document(mName).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                String mTradingLimit = documentSnapshot.getString("capital");
+
+
+                                double doubleTradingLimit = Double.parseDouble(mTradingLimit);
+                                capital.setText("Trading Limit :"+String.format("%.2f", doubleTradingLimit));
+                            }
+                        }
+                    }
+                });
+
+
+
+
         FBMIndexGraph();
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +96,7 @@ public class Dashboard extends BaseActivity {
         });
 
     }
+
 
     public void FBMIndexGraph(){
 

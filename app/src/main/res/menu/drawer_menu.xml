@@ -11,34 +11,34 @@
 
         <item
             android:id="@+id/nav_screeners"
-            android:icon="@drawable/ic_portfolio"
+            android:icon="@drawable/ic_screener_white"
             android:title="Screeners"
             />
 
         <item
             android:id="@+id/nav_stocklist"
-            android:icon="@drawable/ic_portfolio"
+            android:icon="@drawable/ic_stock_white"
             android:title="Stocklist"
             />
 
         <item
             android:id="@+id/nav_log"
-            android:icon="@drawable/ic_portfolio"
+            android:icon="@drawable/ic_log_white"
             android:title="Trading Logs"
             />
 
         <item
             android:id="@+id/nav_portfolio"
-            android:icon="@drawable/ic_portfolio"
+            android:icon="@drawable/ic_portfolio_white"
             android:title="Portfolio" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_portfolio"
-                android:title="Share" />
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout_white"
+                android:title="Logout" />
         </menu>
     </item>
 </menu>

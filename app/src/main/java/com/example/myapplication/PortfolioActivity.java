@@ -12,12 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,14 +40,17 @@ public class PortfolioActivity extends BaseActivity {
     SessionManager sessionManager;
     ArrayList<PortfolioObject> portfolioList = new ArrayList<>();
     ListView listView;
+    TextView tradingLimit;
     ProgressDialog nDialog;
+    String TradingLimit;
 
 
 
-    public void generatePortfolio(String stockname, String size, String buyprice){
+    public void generatePortfolio(String stockname, String size, String buyprice, String TradingLimit){
         final String stockName = stockname;
         final String lotSize = size;
         final String buyPrice = buyprice;
+        final String tradingLimit = TradingLimit;
 
         Log.d(TAG, "Name passed " + stockName);
 
@@ -63,6 +69,7 @@ public class PortfolioActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
+
                         String last_close = null;
                         Log.d(TAG, "onResponse: ");
                         try {
@@ -101,15 +108,18 @@ public class PortfolioActivity extends BaseActivity {
                                     totalProfit += ((closePrice * lotSize)-(buyPrice * lotSize));
                                 }
 
-//                                final TextView viewProfit = findViewById(R.id.text_profit);
-                                final TextView viewValue = findViewById(R.id.text_value);
+                                double accValue = totalValue + Double.parseDouble(tradingLimit);
+                                final TextView viewProfit = findViewById(R.id.p_total_profit);
+                                final TextView viewAccValue = findViewById(R.id.p_account_value);
+                                final TextView viewInvestmentValue = findViewById(R.id.p_total_investment_value);
 
 
-//                                viewProfit.setText(String.format("%.2f", totalProfit));
-                                viewValue.setText(String.format("%.2f", totalValue) + "\n" + String.format("%.2f", totalProfit) + "\n" + "0.00" + "\n" + "0.00");
+
+                                viewInvestmentValue.setText(String.format("%.2f", totalValue));
+                                viewAccValue.setText(String.format("%.2f", accValue));
+                                viewProfit.setText(String.format("%.2f", totalProfit));
 
 
-                                nDialog.dismiss();
 
                                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -130,6 +140,7 @@ public class PortfolioActivity extends BaseActivity {
                                 });
 
                             }
+
                             
                         } catch (JSONException e) {
                             Log.d("Error", "hehe");
@@ -168,24 +179,32 @@ public class PortfolioActivity extends BaseActivity {
         setContentView(R.layout.activity_portfolio);
 
 
-        nDialog = new ProgressDialog(PortfolioActivity.this);
-        nDialog.setMessage("Loading..");
-        nDialog.setTitle("Get Data");
-        nDialog.setIndeterminate(false);
-        nDialog.setCancelable(true);
-        nDialog.show();
+
 
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mName = user.get(sessionManager.NAME);
+        
 
-//        String mName = "faiq";
+        db.collection("user_accounts").document(mName).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.d(TAG, "onSuccess: capital");
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                String mTradingLimit = documentSnapshot.getString("capital");
 
-
-
-
+                                tradingLimit = findViewById(R.id.p_trading_limit);
+                                double doubleTradingLimit = Double.parseDouble(mTradingLimit);
+                                tradingLimit.setText(String.format("%.2f", doubleTradingLimit));
+                                TradingLimit = mTradingLimit;
+                            }
+                        }
+                    }
+                    });
 
         db.collection("user_accounts").document(mName).collection("portfolio").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -193,11 +212,25 @@ public class PortfolioActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot snapshot : queryDocumentSnapshots)
-                            generatePortfolio(snapshot.getId(), snapshot.getString("size"), snapshot.getString("price"));
+
+
+                            for (DocumentSnapshot snapshot : queryDocumentSnapshots)
+                                generatePortfolio(snapshot.getId(), snapshot.getString("size"), snapshot.getString("price"), TradingLimit);
+
+
+
                     }
                 }
-                );
+                )
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+
     }
 
 

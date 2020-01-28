@@ -37,9 +37,13 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
     Toolbar toolbar;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
+
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);// The base layout that contains your navigation drawer.
         view_stub = (FrameLayout) findViewById(R.id.view_stub);
@@ -136,6 +140,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
             case R.id.nav_portfolio:
                 Intent intent5 = new Intent(this,PortfolioActivity.class);
                 this.startActivity(intent5);// do whatever
+                break;
+            case R.id.nav_logout:
+                sessionManager.logout();
                 break;
             // and so on...
         }

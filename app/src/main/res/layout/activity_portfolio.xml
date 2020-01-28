@@ -18,59 +18,104 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--    <TextView-->
-<!--        android:id="@+id/textViewProfit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="108dp"-->
-<!--        android:text="Total Profit"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.29"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/text_profit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Profit"-->
-<!--        android:textSize="24sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.117"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/textViewProfit"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/text_value"-->
-<!--        app:layout_constraintVertical_bias="0.013" />-->
-
-    <TextView
-        android:id="@+id/textViewValue"
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Investment Value (RM)\nTotal Profit/Loss (RM)\nTrading Limit (RM)\nAccount Value (RM)"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_marginBottom="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/text_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.00\n0.00\n0.00\n0.00"
-        android:textSize="16sp"
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.449"
-        app:layout_constraintStart_toEndOf="@+id/textViewValue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+            <TextView
+                android:id="@+id/textViewInvestmentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Investment Value (RM)          "
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/p_total_investment_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewProfit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Profit/Loss (RM)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/p_total_profit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewLimit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trading Limit (RM)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/p_trading_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewAccValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account Value (RM)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/p_account_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+    </TableLayout>
+
 
     <ListView
         android:id="@+id/list_view"
@@ -78,10 +123,10 @@
         android:layout_height="494dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewValue"
-        app:layout_constraintVertical_bias="0.486">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.877">
 
 
     </ListView>
@@ -96,7 +141,7 @@
         app:layout_constraintBottom_toTopOf="@+id/list_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewValue"
+
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -109,7 +154,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.703"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textViewValue"
+
         app:layout_constraintVertical_bias="0.98" />
 
     <TextView
@@ -122,7 +167,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewValue"
+
         app:layout_constraintVertical_bias="0.98" />
 
 

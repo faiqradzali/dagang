@@ -71,10 +71,10 @@ public class Register extends AppCompatActivity {
                     }
                 });
 
-        Map<String, Object> init_doc = new HashMap<>();
-        init_doc.put(KEY_INIT, "init");
-
-        db.collection("user_accounts").document(user).collection("portfolio").document("init").set(init_doc);
-        db.collection("user_accounts").document(user).collection("log").document("init").set(init_doc);
+//        Map<String, Object> init_doc = new HashMap<>();
+//        init_doc.put(KEY_INIT, "init");
+//
+//        db.collection("user_accounts").document(user).collection("portfolio").document("init").set(init_doc);
+//        db.collection("user_accounts").document(user).collection("log").document("init").set(init_doc);
     }
 }

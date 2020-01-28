@@ -20,5 +20,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
+        app:itemIconTint="#FFF"
         />
 </androidx.drawerlayout.widget.DrawerLayout>
