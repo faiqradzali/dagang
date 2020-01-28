@@ -101,9 +101,13 @@ public class Trade extends BaseActivity {
                             Log.d("abc", split_open.toString());
 
                             last_close = split_close[split_close.length - 1];
+                            float floatClose = parseFloat(last_close);
+                            last_close = String.format("%.3f",floatClose);
                             view_close.setText(last_close);
 
                             last_open = split_open[split_open.length - 1];
+                            float floatOpen = parseFloat(last_open);
+                            last_open = String.format("%.3f",floatOpen);
                             view_open.setText(last_open);
 
                             String high = response.getString("h");
@@ -115,9 +119,13 @@ public class Trade extends BaseActivity {
                             String[] split_low = low.split(",");
 
                             last_high = split_high[split_high.length - 1];
+                            float floatHigh = parseFloat(last_high);
+                            last_high = String.format("%.3f",floatHigh);
                             view_high.setText(last_high);
 
                             last_low = split_low[split_low.length - 1];
+                            float floatLow= parseFloat(last_low);
+                            last_low = String.format("%.3f",floatLow);
                             view_low.setText(last_low);
 
                             //chart starting

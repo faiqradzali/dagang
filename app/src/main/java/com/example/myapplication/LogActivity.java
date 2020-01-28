@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -46,6 +47,7 @@ public class LogActivity extends BaseActivity {
     ListView listView;
     SessionManager sessionManager;
     ArrayList<LogObject> LogList = new ArrayList<>();
+    private DocumentReference docRef;
 
     public void generateLog(String docID, String date, String stock,String price,String size,String type){
         final String log_ID =  docID;
@@ -78,7 +80,7 @@ public class LogActivity extends BaseActivity {
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        String mName = user.get(sessionManager.NAME);
+        final String mName = user.get(sessionManager.NAME);
 
         db.collection("user_accounts").document(mName).collection("log").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -86,19 +88,22 @@ public class LogActivity extends BaseActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            String gDate = documentSnapshot.getString("date");
-                            String gStock = documentSnapshot.getString("stock");
-                            String gPrice = documentSnapshot.getString("price");
-                            String gSize = documentSnapshot.getString("size");
-                            String gType = documentSnapshot.getString("type");
-                            String gID = documentSnapshot.getId();
+                            if (documentSnapshot.getId().equals("init")){
+                                continue;
+                            }
+                            else{
+                                String gDate = documentSnapshot.getString("date");
+                                String gStock = documentSnapshot.getString("stock");
+                                String gPrice = documentSnapshot.getString("price");
+                                String gSize = documentSnapshot.getString("size");
+                                String gType = documentSnapshot.getString("type");
+                                String gID = documentSnapshot.getId();
+                                Log.d("ewe", "ID"+gID+"\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
 
+                                LogObject logObject = new LogObject(gID,gDate,gStock,gPrice,gSize,gType);
+                                LogList.add(logObject);
+                            }
 
-                            LogObject logObject = new LogObject(gID,gDate,gStock,gPrice,gSize,gType);
-                            LogList.add(logObject);
-
-                            Log.d("ewe",
-                                    "ID"+gID+"\nDate: " + gDate + "\nDescription: " + gStock + "\nPrice: "+gPrice);
                         }
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
@@ -108,6 +113,10 @@ public class LogActivity extends BaseActivity {
                 });
 
     }
-
 }
+
+
+
+
+
 

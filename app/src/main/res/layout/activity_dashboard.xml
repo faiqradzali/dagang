@@ -8,87 +8,94 @@
 
 
     <TextView
-        android:id="@+id/whiteBg2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="100dp"
+        android:id="@+id/whiteBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:background="@drawable/rectangle_6"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="280dp"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/fbm_chart"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.github.mikephil.charting.charts.CandleStickChart
+        android:id="@+id/fbm_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/closeVal"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.462" />
 
     <TextView
         android:id="@+id/closeVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:text="0000.00"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.319"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintStart_toEndOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:text="Welcome back,"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:text="name"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.github.mikephil.charting.charts.CandleStickChart
-        android:id="@+id/fbm_chart"
-        android:layout_width="0dp"
-        android:layout_height="237dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="352dp"
-        app:layout_constraintBottom_toBottomOf="@+id/whiteBg2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toEndOf="@+id/welcome"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/logoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button"
+        android:layout_marginBottom="56dp"
 
+        android:background="@drawable/button"
         android:text="LOGOUT"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/whiteBg2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/d_acc_value"
@@ -104,8 +111,8 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.782" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStocks"
+        app:layout_constraintVertical_bias="0.167" />
 
     <TextView
         android:id="@+id/d_trading_limit"
@@ -117,81 +124,82 @@
         android:text="10000.21"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.742" />
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="190dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fbm_chart">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/buttonStocks"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_screener"
-                android:text=" STOCKS" />
-
-            <Button
-                android:id="@+id/buttonScreener"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_screener"
-                android:text=" SCREENER" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/buttonPortfolio"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_portfolio"
-                android:text=" PORTFOLIO" />
-
-            <Button
-                android:id="@+id/buttonLog"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_log"
-                android:text=" LOG" />
-
-        </TableRow>
-    </TableLayout>
+        app:layout_constraintBottom_toTopOf="@+id/fbm_chart"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toEndOf="@+id/text_name"
+        app:layout_constraintTop_toTopOf="@+id/whiteBg"
+        app:layout_constraintVertical_bias="0.615" />
 
 
+    <Button
+        android:id="@+id/buttonStocks"
+        android:onClick="goStock"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="2dp"
+        android:background="#9DABDD"
+        android:drawableTop="@drawable/ic_screener"
+        android:text=" STOCKS"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonScreener"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPortfolio" />
 
+    <Button
+        android:id="@+id/buttonScreener"
+        android:onClick="goScreener"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="2dp"
+        android:background="#E58B88"
+        android:drawableTop="@drawable/ic_screener"
+        android:text=" SCREENER"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLog" />
 
+    <Button
+        android:id="@+id/buttonPortfolio"
+        android:onClick="goPortfolio"
+        android:layout_width="0dp"
+        android:layout_marginLeft="2dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="#70AE98"
+        android:drawableTop="@drawable/ic_portfolio"
+        android:text=" PORTFOLIO"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonLog"
+        app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
 
-
-
+    <Button
+        android:id="@+id/buttonLog"
+        android:onClick="goLog"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginBottom="2dp"
+        android:background="#ECBE7A"
+        android:drawableTop="@drawable/ic_log"
+        android:text=" LOG"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FBMKLCI |"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:text="FTSE Bursa Malaysia KLCI | "
         android:textColor="#000"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/closeVal"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/fbm_chart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

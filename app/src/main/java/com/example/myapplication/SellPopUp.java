@@ -111,6 +111,9 @@ public class SellPopUp extends BaseActivity {
 
                                     db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",newSize);
                                     db.collection("user_accounts").document(mName).update("capital",balance);
+                                    if (newSize.equals("0")){
+                                        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).delete();
+                                    }
 
                                     i.putExtra("stock", stock_name);
                                     i.putExtra("size", size);

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class Dashboard extends BaseActivity {
     private TextView name;
     private TextView capital;
     private Button btn_logout;
+    private String mMoney;
+    private String mName;
     SessionManager sessionManager;
     Double last_close, last_2days_close;
 
@@ -51,8 +54,9 @@ public class Dashboard extends BaseActivity {
         btn_logout = findViewById(R.id.logoutBtn);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        String mName = user.get(sessionManager.NAME);
-        String mMoney = user.get(sessionManager.MONEY);
+        mName = user.get(sessionManager.NAME);
+        mMoney = user.get(sessionManager.MONEY);
+        Log.d("money user: ", mMoney);
 
         name.setText(mName);
         capital.setText("Trading Limit: "+mMoney);
@@ -194,5 +198,23 @@ public class Dashboard extends BaseActivity {
         );
 
         requestQueue.add(objectRequest);
+    }
+
+    public void goLog(View view){
+        Intent i = new Intent(this,LogActivity.class);
+        startActivity(i);
+    }
+
+    public void goPortfolio(View view){
+        Intent i = new Intent(this,PortfolioActivity.class);
+        startActivity(i);
+    }
+    public void goStock(View view){
+        Intent i = new Intent(this,StocklistActivity.class);
+        startActivity(i);
+    }
+    public void goScreener(View view){
+        Intent i = new Intent(this,ScreenerlistActivity.class);
+        startActivity(i);
     }
 }
