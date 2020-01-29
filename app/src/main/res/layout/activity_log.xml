@@ -18,9 +18,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.32">
-
-
     </ListView>
+
+
+    <TextView
+        android:id="@+id/emptyElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="There are no trading history yet."
+        android:textColor="#525252"
+        android:textSize="19.0sp"
+        android:visibility="gone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

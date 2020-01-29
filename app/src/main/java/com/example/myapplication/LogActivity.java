@@ -108,6 +108,7 @@ public class LogActivity extends BaseActivity {
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
                         listView.setAdapter(adapter);
+                        listView.setEmptyView(findViewById(R.id.emptyElement));
 
                     }
                 });
