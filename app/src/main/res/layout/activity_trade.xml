@@ -76,7 +76,7 @@
         app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintVertical_bias="0.733" />
 
     <TextView
         android:id="@+id/textView10"
@@ -91,7 +91,7 @@
         app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <TextView
         android:id="@+id/textView8"
@@ -106,7 +106,7 @@
         app:layout_constraintHorizontal_bias="0.317"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.644" />
+        app:layout_constraintVertical_bias="0.674" />
 
     <TextView
         android:id="@+id/textView3"
@@ -122,7 +122,7 @@
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.953" />
+        app:layout_constraintVertical_bias="0.996" />
 
     <TextView
         android:id="@+id/lowValue"
@@ -136,7 +136,7 @@
         app:layout_constraintHorizontal_bias="0.639"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintVertical_bias="0.733" />
 
     <TextView
         android:id="@+id/highValue"
@@ -150,7 +150,7 @@
         app:layout_constraintHorizontal_bias="0.639"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.644" />
+        app:layout_constraintVertical_bias="0.674" />
 
     <TextView
         android:id="@+id/closeValue"
@@ -164,7 +164,7 @@
         app:layout_constraintHorizontal_bias="0.639"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintVertical_bias="0.781" />
 
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candle_stick_chart"
@@ -176,17 +176,6 @@
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
         app:layout_constraintVertical_bias="0.125" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="280dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/openValue"
@@ -200,5 +189,53 @@
         app:layout_constraintHorizontal_bias="0.637"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.569" />
+        app:layout_constraintVertical_bias="0.599" />
+
+    <TextView
+        android:id="@+id/predictText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#0FFFFFFF"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="70% chance stock price will increase tommorow"
+        android:textColor="#5C5858"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toEndOf="@+id/closePre"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:id="@+id/closePre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="0.032"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/candle_stick_chart"
+        app:layout_constraintVertical_bias="0.09" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Stock Forecast"
+        android:textColor="#7CB342"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/whiteBg"
+        app:layout_constraintTop_toBottomOf="@+id/candle_stick_chart" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

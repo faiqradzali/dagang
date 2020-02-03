@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +48,9 @@ public class Trade extends BaseActivity {
     String last_close;
     String stock_name;
     String mName;
+    String checkTrend;
+    double predictedVal;
+    double predictedAcc;
 
     HashMap<String, String> user;
     SessionManager sessionManager;
@@ -69,6 +73,8 @@ public class Trade extends BaseActivity {
         final TextView view_open = findViewById(R.id.openValue);
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
+        final TextView view_predict = findViewById(R.id.predictText);
+        final TextView view_predict_value = findViewById(R.id.closePre);
 
         sessionManager = new SessionManager(this);
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -76,7 +82,7 @@ public class Trade extends BaseActivity {
 
 
 
-        String stock_name = getIntent().getStringExtra("Stock");
+        final String stock_name = getIntent().getStringExtra("Stock");
 
         TextView view_stock_name = findViewById(R.id.stockName);
         view_stock_name.setText(stock_name);
@@ -186,14 +192,6 @@ public class Trade extends BaseActivity {
                             candleStickChart.setData(data);
                             candleStickChart.invalidate();
 
-
-
-
-
-
-                            Log.d("Rest Responsse", last_close);
-
-
                         } catch (JSONException e) {
                             Log.d("Error", "hehe");
                         }
@@ -211,6 +209,56 @@ public class Trade extends BaseActivity {
         );
 
         requestQueue.add(objectRequest);
+
+        db.collection("predicted-stock").document("close-value").get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                predictedVal = documentSnapshot.getDouble(stock_name);
+                                String p = String.valueOf(predictedVal);
+                                double beforeClose = Double.parseDouble(last_close);
+                                if (predictedVal > beforeClose) {
+                                    checkTrend = "increase";
+                                    Log.d("Predicted value: ", p);
+                                    Log.d("Value before ", last_close);
+                                    Log.d("Trend: ", checkTrend);
+                                }
+                                else{
+                                    checkTrend = "decrease";
+                                    Log.d("Predicted value: ", p);
+                                    Log.d("Value before ", last_close);
+                                    Log.d("Trend: ", checkTrend);
+                                }
+                            }
+                        }
+                    }
+                });
+
+        db.collection("predicted-stock").document("accuracy-value").get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                predictedAcc = documentSnapshot.getDouble(stock_name);
+                                predictedAcc = predictedAcc*100;
+                                String accP = String.format("%.0f",predictedAcc);
+                                String p = String.format("%.3f",predictedVal);
+                                view_predict.setText(accP+"% chance stock price will "+checkTrend+" tommorow");
+                                view_predict_value.setText(p);
+                                if (checkTrend.equals("increase")) {
+                                    view_predict_value.setTextColor(Color.parseColor("#9cd85b") );
+                                }
+                                else if (checkTrend.equals("decrease")){
+                                    view_predict_value.setTextColor(Color.parseColor("#ff4a36") );
+                                }
+                            }
+                        }
+                    }
+                });
+
     }
 
     public void goPopBuy (View view){
