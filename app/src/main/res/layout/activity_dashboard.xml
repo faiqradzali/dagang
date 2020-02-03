@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_margin="20dp"
         android:background="@drawable/rectangle_6"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLog"
+        app:layout_constraintBottom_toTopOf="@+id/d_trading_limit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,6 @@
         android:text="Welcome back,"
         android:textColor="#000000"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +77,7 @@
         android:textColor="#000000"
 
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toEndOf="@+id/welcome"
@@ -101,28 +101,26 @@
         android:id="@+id/d_trading_limit"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
+        android:padding="3dp"
+
+        android:layout_marginTop="384dp"
         android:background="@drawable/rectangle_12"
 
         android:gravity="center"
         android:text="10000.21"
         android:textColor="#ffffff"
         android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@+id/fbm_chart"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.782"
-        app:layout_constraintStart_toEndOf="@+id/text_name"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonStocks"
-        android:onClick="goStock"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="2dp"
         android:background="#9DABDD"
         android:drawableTop="@drawable/ic_stock"
+        android:onClick="goStock"
         android:text=" STOCKS"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="1.0"
@@ -131,45 +129,47 @@
 
     <Button
         android:id="@+id/buttonScreener"
-        android:onClick="goScreener"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
         android:background="#E58B88"
         android:drawableTop="@drawable/ic_screener"
+        android:onClick="goScreener"
         android:text=" SCREENER"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
         app:layout_constraintTop_toBottomOf="@+id/buttonLog" />
 
     <Button
         android:id="@+id/buttonPortfolio"
-        android:onClick="goPortfolio"
         android:layout_width="0dp"
-        android:layout_marginLeft="2dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="60dp"
         android:background="#70AE98"
         android:drawableTop="@drawable/ic_portfolio"
+        android:onClick="goPortfolio"
         android:text=" PORTFOLIO"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buttonLog"
         app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
 
     <Button
         android:id="@+id/buttonLog"
-        android:onClick="goLog"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="360dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="60dp"
         android:background="#ECBE7A"
         android:drawableTop="@drawable/ic_log"
+        android:onClick="goLog"
         android:text=" LOG"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
 
     <TextView
         android:id="@+id/textView17"

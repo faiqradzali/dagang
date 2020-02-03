@@ -82,9 +82,11 @@ public class SellPopUp extends BaseActivity {
         view_low.setText(low);
         view_buy.setText(close);
     }
-
+//error on session manager buy sell price logic
     public void goToConfirm(View view){
+        sessionManager = new SessionManager(this);
         final HashMap<String, String> user = sessionManager.getUserDetail();
+        mMoney = user.get(sessionManager.MONEY);
         mName = user.get(sessionManager.NAME);
         Log.d("Size in doc: ", stock_name);
         db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
@@ -105,7 +107,10 @@ public class SellPopUp extends BaseActivity {
                                     String newSize = String.valueOf(x - sizeTotal);
                                     Log.d("Size in doc: ", newSize);
                                     float totalPrice = parseFloat(close) * sizeTotal;
-                                    double totalBalance = parseFloat(mMoney) + totalPrice;
+                                    Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
+                                    Log.d("User Money: ", String.valueOf(mMoney));
+                                    float totalBalance = parseFloat(mMoney) + totalPrice;
+                                    Log.d("Balance after sell: ", String.valueOf(totalBalance));
                                     balance = df2.format(totalBalance);
                                     total = df2.format(totalPrice);
 

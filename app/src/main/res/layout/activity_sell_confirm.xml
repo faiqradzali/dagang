@@ -37,7 +37,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transaction"
+        android:text="Transaction Approved"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -163,20 +163,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.635" />
-
-    <TextView
-        android:id="@+id/topText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trading Simulator"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
 
     <View
         android:id="@+id/divider"

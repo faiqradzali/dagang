@@ -48,6 +48,7 @@ public class BuyPopUp extends BaseActivity {
     private static final String KEY_TYPE = "type";
     private static final String KEY_NOTES = "notes";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    HashMap<String, String> user;
     ProgressDialog nDialog;
 
 
@@ -66,7 +67,7 @@ public class BuyPopUp extends BaseActivity {
 
 
         sessionManager = new SessionManager(this);
-        HashMap<String, String> user = sessionManager.getUserDetail();
+        user = sessionManager.getUserDetail();
         mMoney = user.get(sessionManager.MONEY);
 //        Log.d("Money", mMoney);
 
@@ -86,6 +87,9 @@ public class BuyPopUp extends BaseActivity {
     }
 
     public void goToConfirm(View view){
+        sessionManager = new SessionManager(this);
+        user = sessionManager.getUserDetail();
+        mMoney = user.get(sessionManager.MONEY);
         nDialog = new ProgressDialog(BuyPopUp.this);
         nDialog.setMessage("Locating stock in database..");
         nDialog.setTitle("Approving transaction..");
@@ -96,18 +100,22 @@ public class BuyPopUp extends BaseActivity {
         final String s = view_size.getText().toString();
         final int sizeTotal =parseInt(s)*100;
         float totalPrice = parseFloat(close) * sizeTotal;
-        double totalBalance = parseFloat(mMoney) - totalPrice;
+        Log.d("User money now: ", String.valueOf(mMoney));
+        Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
+        float totalBalance = parseFloat(mMoney) - totalPrice;
+        Log.d("Balance after buy: ", String.valueOf(totalBalance));
         balance = df2.format(totalBalance);
         Log.d("check balance", balance);
         total = df2.format(totalPrice);
         size = String.valueOf(sizeTotal);
 
         if (parseFloat(mMoney) < totalPrice){
-            Intent i = new Intent(getApplicationContext(), BuyPopUp.class);
+            Intent i = new Intent(getApplicationContext(), Trade.class);
+            i.putExtra("Stock",stock_name);
             Toast.makeText(this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
             startActivity(i);
         }
-        else{
+        else if (parseFloat(mMoney) >= totalPrice){
             Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
 //            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
             i.putExtra("stock",stock_name);
@@ -159,6 +167,12 @@ public class BuyPopUp extends BaseActivity {
 
                         }
                     });
+            startActivity(i);
+        }
+        else{
+            Intent i = new Intent(getApplicationContext(), Trade.class);
+            Toast.makeText(this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+            i.putExtra("Stock",stock_name);
             startActivity(i);
         }
     }

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -54,7 +55,6 @@ public class Trade extends BaseActivity {
 
     HashMap<String, String> user;
     SessionManager sessionManager;
-
 
     private static final String KEY_DATE = "date";
     private static final String KEY_PRICE = "price";
@@ -192,6 +192,55 @@ public class Trade extends BaseActivity {
                             candleStickChart.setData(data);
                             candleStickChart.invalidate();
 
+                            db.collection("predicted-stock").document("close-value").get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                if (documentSnapshot != null) {
+                                                    predictedVal = documentSnapshot.getDouble(stock_name);
+                                                    String p = String.valueOf(predictedVal);
+                                                    double beforeClose = Double.parseDouble(last_close);
+                                                    if (predictedVal > beforeClose) {
+                                                        checkTrend = "increase";
+                                                        Log.d("Predicted value: ", p);
+                                                        Log.d("Value before ", last_close);
+                                                        Log.d("Trend: ", checkTrend);
+                                                    }
+                                                    else{
+                                                        checkTrend = "decrease";
+                                                        Log.d("Predicted value: ", p);
+                                                        Log.d("Value before ", last_close);
+                                                        Log.d("Trend: ", checkTrend);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+
+                            db.collection("predicted-stock").document("accuracy-value").get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                if (documentSnapshot != null) {
+                                                    predictedAcc = documentSnapshot.getDouble(stock_name);
+                                                    predictedAcc = predictedAcc*100;
+                                                    String accP = String.format("%.0f",predictedAcc);
+                                                    String p = String.format("%.3f",predictedVal);
+                                                    view_predict.setText(accP+"% chance stock price will "+checkTrend+" tommorow");
+                                                    view_predict_value.setText(p);
+                                                    if (checkTrend.equals("increase")) {
+                                                        view_predict_value.setTextColor(Color.parseColor("#9cd85b") );
+                                                    }
+                                                    else if (checkTrend.equals("decrease")){
+                                                        view_predict_value.setTextColor(Color.parseColor("#ff4a36") );
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+
                         } catch (JSONException e) {
                             Log.d("Error", "hehe");
                         }
@@ -210,54 +259,6 @@ public class Trade extends BaseActivity {
 
         requestQueue.add(objectRequest);
 
-        db.collection("predicted-stock").document("close-value").get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            if (documentSnapshot != null) {
-                                predictedVal = documentSnapshot.getDouble(stock_name);
-                                String p = String.valueOf(predictedVal);
-                                double beforeClose = Double.parseDouble(last_close);
-                                if (predictedVal > beforeClose) {
-                                    checkTrend = "increase";
-                                    Log.d("Predicted value: ", p);
-                                    Log.d("Value before ", last_close);
-                                    Log.d("Trend: ", checkTrend);
-                                }
-                                else{
-                                    checkTrend = "decrease";
-                                    Log.d("Predicted value: ", p);
-                                    Log.d("Value before ", last_close);
-                                    Log.d("Trend: ", checkTrend);
-                                }
-                            }
-                        }
-                    }
-                });
-
-        db.collection("predicted-stock").document("accuracy-value").get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            if (documentSnapshot != null) {
-                                predictedAcc = documentSnapshot.getDouble(stock_name);
-                                predictedAcc = predictedAcc*100;
-                                String accP = String.format("%.0f",predictedAcc);
-                                String p = String.format("%.3f",predictedVal);
-                                view_predict.setText(accP+"% chance stock price will "+checkTrend+" tommorow");
-                                view_predict_value.setText(p);
-                                if (checkTrend.equals("increase")) {
-                                    view_predict_value.setTextColor(Color.parseColor("#9cd85b") );
-                                }
-                                else if (checkTrend.equals("decrease")){
-                                    view_predict_value.setTextColor(Color.parseColor("#ff4a36") );
-                                }
-                            }
-                        }
-                    }
-                });
 
     }
 
