@@ -28,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
 
 
 public abstract class BaseActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
@@ -36,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Menu drawerMenu;
+    HashMap<String, String> user;
     Toolbar toolbar;
     SessionManager sessionManager;
 
@@ -119,6 +121,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        sessionManager = new SessionManager(this);
+        user = sessionManager.getUserDetail();
         switch (item.getItemId()) {
             case R.id.nav_dashboard:
                 Intent intent1 = new Intent(this, Dashboard.class);
@@ -142,6 +146,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
                 this.startActivity(intent5);// do whatever
                 break;
             case R.id.nav_logout:
+                Intent intent6 = new Intent(this,Login.class);
+                this.startActivity(intent6);
                 sessionManager.logout();
                 break;
             // and so on...

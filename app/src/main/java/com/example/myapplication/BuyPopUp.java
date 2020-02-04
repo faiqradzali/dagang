@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +37,7 @@ public class BuyPopUp extends BaseActivity {
     String total;
     String size;
     String balance;
-    String mMoney;
+    String mName;
     String currentDate;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
@@ -47,6 +48,7 @@ public class BuyPopUp extends BaseActivity {
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
     private static final String KEY_NOTES = "notes";
+    private static final String KEY_MONEY = "capital";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     HashMap<String, String> user;
     ProgressDialog nDialog;
@@ -68,9 +70,7 @@ public class BuyPopUp extends BaseActivity {
 
         sessionManager = new SessionManager(this);
         user = sessionManager.getUserDetail();
-        mMoney = user.get(sessionManager.MONEY);
 //        Log.d("Money", mMoney);
-
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
         open = intent.getStringExtra("open");
@@ -89,92 +89,101 @@ public class BuyPopUp extends BaseActivity {
     public void goToConfirm(View view){
         sessionManager = new SessionManager(this);
         user = sessionManager.getUserDetail();
-        mMoney = user.get(sessionManager.MONEY);
-        nDialog = new ProgressDialog(BuyPopUp.this);
-        nDialog.setMessage("Locating stock in database..");
-        nDialog.setTitle("Approving transaction..");
-        nDialog.setIndeterminate(false);
-        nDialog.setCancelable(true);
-        nDialog.show();
-        EditText view_size = findViewById(R.id.inputSize);
-        final String s = view_size.getText().toString();
-        final int sizeTotal =parseInt(s)*100;
-        float totalPrice = parseFloat(close) * sizeTotal;
-        Log.d("User money now: ", String.valueOf(mMoney));
-        Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
-        float totalBalance = parseFloat(mMoney) - totalPrice;
-        Log.d("Balance after buy: ", String.valueOf(totalBalance));
-        balance = df2.format(totalBalance);
-        Log.d("check balance", balance);
-        total = df2.format(totalPrice);
-        size = String.valueOf(sizeTotal);
+        mName = user.get(sessionManager.NAME);
+        Log.d("name of current user: ", mName);
+        db.collection("user_accounts").document(mName).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                String mMoney = documentSnapshot.getString(KEY_MONEY);
+                                EditText view_size = findViewById(R.id.inputSize);
+                                final String s = view_size.getText().toString();
+                                if (s.equals("")){
+                                    Toast.makeText(BuyPopUp.this, "Enter size", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    final int sizeTotal =parseInt(s)*100;
+                                    float totalPrice = parseFloat(close) * sizeTotal;
+                                    Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
+                                    Log.d("user money db: ", mMoney);
+                                    float totalBalance = parseFloat(mMoney) - totalPrice;
+                                    Log.d("Balance after buy: ", String.valueOf(totalBalance));
+                                    balance = df2.format(totalBalance);
+                                    Log.d("check balance", balance);
+                                    total = df2.format(totalPrice);
+                                    size = String.valueOf(sizeTotal);
 
-        if (parseFloat(mMoney) < totalPrice){
-            Intent i = new Intent(getApplicationContext(), Trade.class);
-            i.putExtra("Stock",stock_name);
-            Toast.makeText(this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
-            startActivity(i);
-        }
-        else if (parseFloat(mMoney) >= totalPrice){
-            Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
-//            Toast.makeText(this, "Approving transaction...", Toast.LENGTH_SHORT).show();
-            i.putExtra("stock",stock_name);
-            i.putExtra("size",size);
-            i.putExtra("total",total);
-            i.putExtra("balance",balance);
+                                    if (parseFloat(mMoney) < totalPrice){
+                                        Intent i = new Intent(getApplicationContext(), Trade.class);
+                                        i.putExtra("Stock",stock_name);
+                                        Toast.makeText(BuyPopUp.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+                                        startActivity(i);
+                                    }
+                                    else if (parseFloat(mMoney) >= totalPrice){
+                                        Intent i = new Intent(getApplicationContext(), BuyConfirm.class);
+                                        i.putExtra("stock",stock_name);
+                                        i.putExtra("size",size);
+                                        i.putExtra("total",total);
+                                        i.putExtra("balance",balance);
 
-            final HashMap<String, String> user = sessionManager.getUserDetail();
-            final String mName = user.get(sessionManager.NAME);
-            Map<String, Object> log = new HashMap<>();
-            log.put(KEY_DATE, currentDate);
-            log.put(KEY_PRICE, close);
-            log.put(KEY_SIZE, size);
-            log.put(KEY_STOCK, stock_name);
-            log.put(KEY_TYPE, "BUY");
-            log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
+                                        final HashMap<String, String> user = sessionManager.getUserDetail();
+                                        final String mName = user.get(sessionManager.NAME);
+                                        Map<String, Object> log = new HashMap<>();
+                                        log.put(KEY_DATE, currentDate);
+                                        log.put(KEY_PRICE, close);
+                                        log.put(KEY_SIZE, size);
+                                        log.put(KEY_STOCK, stock_name);
+                                        log.put(KEY_TYPE, "BUY");
+                                        log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
 
-            final Map<String, Object> portfolio = new HashMap<>();
-            portfolio.put(KEY_DATE,currentDate);
-            portfolio.put(KEY_PRICE, close);
-            portfolio.put(KEY_SIZE, size);
+                                        final Map<String, Object> portfolio = new HashMap<>();
+                                        portfolio.put(KEY_DATE,currentDate);
+                                        portfolio.put(KEY_PRICE, close);
+                                        portfolio.put(KEY_SIZE, size);
 
-            db.collection("user_accounts").document(mName).collection("log").document().set(log);
+                                        db.collection("user_accounts").document(mName).collection("log").document().set(log);
 
-            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                if (documentSnapshot != null) {
-                                    size = documentSnapshot.getString(KEY_SIZE);
-                                    String s = String.valueOf(sizeTotal+parseInt(size));
-                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",s);
+                                        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (documentSnapshot.exists()) {
+                                                            if (documentSnapshot != null) {
+                                                                size = documentSnapshot.getString(KEY_SIZE);
+                                                                String s = String.valueOf(sizeTotal+parseInt(size));
+                                                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",s);
+
+                                                            }
+                                                            else {
+                                                                Log.d("error", "else in not null snapshot ");
+                                                            }
+
+                                                        } else {
+                                                            db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
+                                                        }
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(BuyPopUp.this, "Error", Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                });
+                                        startActivity(i);
+                                    }
+                                    else{
+                                        Intent i = new Intent(getApplicationContext(), Trade.class);
+                                        Toast.makeText(BuyPopUp.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+                                        i.putExtra("Stock",stock_name);
+                                        startActivity(i);
+                                    }
 
                                 }
-                                else {
-                                    Log.d("error", "else in not null snapshot ");
-                                }
-
-                            } else {
-                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).set(portfolio);
-                            }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BuyPopUp.this, "Error", Toast.LENGTH_SHORT).show();
-
-                        }
+                            }}}
                     });
-            startActivity(i);
-        }
-        else{
-            Intent i = new Intent(getApplicationContext(), Trade.class);
-            Toast.makeText(this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
-            i.putExtra("Stock",stock_name);
-            startActivity(i);
-        }
     }
 
     public void cancelBtn(View view){

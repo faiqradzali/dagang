@@ -34,7 +34,6 @@ public class SellPopUp extends BaseActivity {
     String total;
     String size;
     String balance;
-    String mMoney;
     String currentDate;
     String mName;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
@@ -46,6 +45,8 @@ public class SellPopUp extends BaseActivity {
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
     private static final String KEY_NOTES= "notes";
+    private static final String KEY_MONEY= "capital";
+    HashMap<String, String> user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -62,11 +63,8 @@ public class SellPopUp extends BaseActivity {
 
         currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
-
         sessionManager = new SessionManager(this);
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        mMoney = user.get(sessionManager.MONEY);
-//        Log.d("Money", mMoney);
+        user = sessionManager.getUserDetail();
 
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
@@ -85,67 +83,74 @@ public class SellPopUp extends BaseActivity {
 //error on session manager buy sell price logic
     public void goToConfirm(View view){
         sessionManager = new SessionManager(this);
-        final HashMap<String, String> user = sessionManager.getUserDetail();
-        mMoney = user.get(sessionManager.MONEY);
+        user = sessionManager.getUserDetail();
         mName = user.get(sessionManager.NAME);
-        Log.d("Size in doc: ", stock_name);
         db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             if (documentSnapshot != null) {
-                                Intent i = new Intent(getApplicationContext(), SellConfirm.class);
+                                final Intent i = new Intent(getApplicationContext(), SellConfirm.class);
                                 EditText view_size = findViewById(R.id.inputSize);
                                 final String s = view_size.getText().toString();
-                                int sizeTotal = parseInt(s) * 100;
-                                size = String.valueOf(sizeTotal);
-                                String sizeInDoc = documentSnapshot.getString(KEY_SIZE);
-                                int x = parseInt(sizeInDoc);
 
-                                if (sizeTotal <= x) {
-                                    String newSize = String.valueOf(x - sizeTotal);
-                                    Log.d("Size in doc: ", newSize);
-                                    float totalPrice = parseFloat(close) * sizeTotal;
-                                    Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
-                                    Log.d("User Money: ", String.valueOf(mMoney));
-                                    float totalBalance = parseFloat(mMoney) + totalPrice;
-                                    Log.d("Balance after sell: ", String.valueOf(totalBalance));
-                                    balance = df2.format(totalBalance);
-                                    total = df2.format(totalPrice);
+                                if (s.equals("")) {
+                                    Toast.makeText(SellPopUp.this, "Enter size", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    final int sizeTotal = parseInt(s) * 100;
+                                    size = String.valueOf(sizeTotal);
+                                    String sizeInDoc = documentSnapshot.getString(KEY_SIZE);
+                                    final int x = parseInt(sizeInDoc);
+                                    db.collection("user_accounts").document(mName).get()
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if (documentSnapshot.exists()) {
+                                                        if (documentSnapshot != null) {
+                                                            String mMoney = documentSnapshot.getString(KEY_MONEY);
+                                                            if (sizeTotal <= x) {
+                                                                String newSize = String.valueOf(x - sizeTotal);
+                                                                Log.d("Size in doc: ", newSize);
+                                                                float totalPrice = parseFloat(close) * sizeTotal;
+                                                                Log.d("Price of stockXsize: ", String.valueOf(totalPrice));
+                                                                Log.d("User Money: ", String.valueOf(mMoney));
+                                                                float totalBalance = parseFloat(mMoney) + totalPrice;
+                                                                Log.d("Balance after sell: ", String.valueOf(totalBalance));
+                                                                balance = df2.format(totalBalance);
+                                                                total = df2.format(totalPrice);
 
-                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size",newSize);
-                                    db.collection("user_accounts").document(mName).update("capital",balance);
-                                    if (newSize.equals("0")){
-                                        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).delete();
-                                    }
+                                                                db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).update("size", newSize);
+                                                                db.collection("user_accounts").document(mName).update("capital", balance);
+                                                                if (newSize.equals("0")) {
+                                                                    db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).delete();
+                                                                }
 
-                                    i.putExtra("stock", stock_name);
-                                    i.putExtra("size", size);
-                                    i.putExtra("total", total);
-                                    Log.d("money: ", balance);
-                                    i.putExtra("capital", balance);
+                                                                i.putExtra("stock", stock_name);
+                                                                i.putExtra("size", size);
+                                                                i.putExtra("total", total);
+                                                                Log.d("money: ", balance);
+                                                                i.putExtra("capital", balance);
 
-                                    Map<String, Object> log = new HashMap<>();
-                                    log.put(KEY_DATE, currentDate);
-                                    log.put(KEY_PRICE, close);
-                                    log.put(KEY_SIZE, size);
-                                    log.put(KEY_STOCK, stock_name);
-                                    log.put(KEY_TYPE, "SELL");
-                                    log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
-                                    db.collection("user_accounts").document(mName).collection("log").document().set(log);
-                                    startActivity(i);
+                                                                Map<String, Object> log = new HashMap<>();
+                                                                log.put(KEY_DATE, currentDate);
+                                                                log.put(KEY_PRICE, close);
+                                                                log.put(KEY_SIZE, size);
+                                                                log.put(KEY_STOCK, stock_name);
+                                                                log.put(KEY_TYPE, "SELL");
+                                                                log.put(KEY_NOTES, "After editting, click the tick button on the right corner.");
+                                                                db.collection("user_accounts").document(mName).collection("log").document().set(log);
+                                                                startActivity(i);
+                                                            } else {
+                                                                Toast.makeText(SellPopUp.this, "Size exceed limit.", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            });
                                 }
-                                else{
-                                    Toast.makeText(SellPopUp.this, "Size exceed limit.", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Log.d("error", "else in not null snapshot ");
                             }
-
-                        }
-                    }
-                });
+                        }}});
     }
 
     public void cancelBtn(View view){

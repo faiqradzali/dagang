@@ -49,7 +49,7 @@ public class Trade extends BaseActivity {
     String last_close;
     String stock_name;
     String mName;
-    String checkTrend;
+    String checkTrend="not null";
     double predictedVal;
     double predictedAcc;
 
@@ -275,7 +275,6 @@ public class Trade extends BaseActivity {
     }
 
     public void goPopSell (View view){
-
         user = sessionManager.getUserDetail();
         mName = user.get(sessionManager.NAME);
         stock_name = getIntent().getStringExtra("Stock");
