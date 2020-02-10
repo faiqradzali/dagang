@@ -56,54 +56,61 @@ public class Login extends AppCompatActivity{
     }
 
     public void loadUser(View v) {
-        nDialog = new ProgressDialog(Login.this);
-        nDialog.setMessage("Verifying username and password..");
-        nDialog.setTitle("Logging in..");
-        nDialog.setIndeterminate(false);
-        nDialog.setCancelable(true);
-        nDialog.show();
-        final String username = editTextUsername.getText().toString();
-        final String password = editTextPassword.getText().toString();
-        db.collection("user_accounts").document(username).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            if (documentSnapshot != null) {
-                                String user = documentSnapshot.getString(KEY_USER);
-                                String pass = documentSnapshot.getString(KEY_PASS);
-                                String email = documentSnapshot.getString(KEY_EMAIL);
-                                String capital = documentSnapshot.getString(KEY_MONEY);
+        try{
+            nDialog = new ProgressDialog(Login.this);
+            nDialog.setMessage("Verifying username and password..");
+            nDialog.setTitle("Logging in..");
+            nDialog.setIndeterminate(false);
+            nDialog.setCancelable(true);
+            nDialog.show();
+            final String username = editTextUsername.getText().toString();
+            final String password = editTextPassword.getText().toString();
 
-                                nDialog.hide();
+            db.collection("user_accounts").document(username).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                if (documentSnapshot != null) {
+                                    String user = documentSnapshot.getString(KEY_USER);
+                                    String pass = documentSnapshot.getString(KEY_PASS);
+                                    String email = documentSnapshot.getString(KEY_EMAIL);
+                                    String capital = documentSnapshot.getString(KEY_MONEY);
 
-                                if (password.equals(pass)) {
+                                    nDialog.hide();
 
-                                    sessionManager.createSession(user, email, capital);
-                                    Intent i = new Intent(getApplicationContext(), Dashboard.class);
+                                    if (password.equals(pass)) {
 
-                                    startActivity(i);
-                                } else {
-                                    Toast.makeText(Login.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                        sessionManager.createSession(user, email, capital);
+                                        Intent i = new Intent(getApplicationContext(), Dashboard.class);
+
+                                        startActivity(i);
+                                    } else {
+                                        Toast.makeText(Login.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                             else {
-                                Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
-                            }
+                                else {
+                                    Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
+                                }
 
 
-                        } else {
-                            Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT);
+                            } else {
+                                Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT);
+                            }
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+                        }
+                    });
+        }catch (Exception e){
+            nDialog.hide();
+            Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 }

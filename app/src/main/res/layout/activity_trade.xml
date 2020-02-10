@@ -30,8 +30,8 @@
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/stockName"
@@ -60,8 +60,8 @@
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/textView9"
@@ -73,10 +73,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/textView10"
@@ -90,8 +90,8 @@
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/textView8"
@@ -103,26 +103,24 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.317"
+        app:layout_constraintHorizontal_bias="0.305"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.674" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="241dp"
+        android:layout_marginTop="32dp"
         android:text="Open"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.996" />
+        app:layout_constraintTop_toBottomOf="@+id/predictText" />
 
     <TextView
         android:id="@+id/lowValue"
@@ -133,10 +131,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.639"
-        app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/highValue"
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/highValue"
@@ -147,10 +145,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.639"
-        app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.674" />
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/openValue"
+        app:layout_constraintVertical_bias="0.076" />
 
     <TextView
         android:id="@+id/closeValue"
@@ -161,10 +159,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/whiteBg"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.639"
-        app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.781" />
+        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/lowValue"
+        app:layout_constraintVertical_bias="0.07" />
 
     <com.github.mikephil.charting.charts.CandleStickChart
         android:id="@+id/candle_stick_chart"
@@ -186,10 +184,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintHorizontal_bias="0.637"
-        app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="@+id/whiteBg"
-        app:layout_constraintVertical_bias="0.599" />
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/predictText"
+        app:layout_constraintVertical_bias="0.102" />
 
     <TextView
         android:id="@+id/predictText"

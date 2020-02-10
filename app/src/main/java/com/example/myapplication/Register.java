@@ -43,38 +43,39 @@ public class Register extends AppCompatActivity {
     }
 
     public void registerAccount (View v) {
-        String user = editTextUser.getText().toString();
-        String pass = editTextPass.getText().toString();
-        String email = editTextEmail.getText().toString();
-        String money = "10000";
 
-        Map<String, Object> account = new HashMap<>();
-        account.put(KEY_USER, user);
-        account.put(KEY_PASS, pass);
-        account.put(KEY_EMAIL, email);
-        account.put(KEY_MONEY, money);
 
-        db.collection("user_accounts").document(user).set(account)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Register.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), Login.class);
-                        startActivity(i);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, e.toString());
-                    }
-                });
+        try {
+            String user = editTextUser.getText().toString();
+            String pass = editTextPass.getText().toString();
+            String email = editTextEmail.getText().toString();
+            String money = "10000";
 
-//        Map<String, Object> init_doc = new HashMap<>();
-//        init_doc.put(KEY_INIT, "init");
-//
-//        db.collection("user_accounts").document(user).collection("portfolio").document("init").set(init_doc);
-//        db.collection("user_accounts").document(user).collection("log").document("init").set(init_doc);
+            Map<String, Object> account = new HashMap<>();
+            account.put(KEY_USER, user);
+            account.put(KEY_PASS, pass);
+            account.put(KEY_EMAIL, email);
+            account.put(KEY_MONEY, money);
+
+            db.collection("user_accounts").document(user).set(account)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(Register.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(), Login.class);
+                            startActivity(i);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, e.toString());
+                        }
+                    });
+        } catch (Exception e) {
+            Toast.makeText(Register.this, "No register details", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
