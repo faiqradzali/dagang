@@ -75,6 +75,7 @@ public class Register extends AppCompatActivity {
                     });
         } catch (Exception e) {
             Toast.makeText(Register.this, "No register details", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, e.toString());
         }
 
     }

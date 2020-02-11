@@ -109,6 +109,7 @@ public class Login extends AppCompatActivity{
         }catch (Exception e){
             nDialog.hide();
             Toast.makeText(Login.this, "User not found", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, e.toString());
         }
 
 

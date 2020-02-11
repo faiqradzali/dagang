@@ -11,23 +11,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NoteActivity"
-            android:label="Trading Journal">
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".LogActivity"
-            android:label="Trading History"></activity>
+        <activity
+            android:name=".NoteActivity"
+            android:label="Trading Journal"></activity>
+        <activity
+            android:name=".LogActivity"
+            android:label="Trading History" />
         <activity
             android:name=".PortfolioDetailActivity"
             android:label="Portfolio"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SellConfirm"
-            android:label="Trading"/>
-        <activity android:name=".SellPopUp"
-            android:label="Trading"/>
-        <activity android:name=".BuyConfirm"
-            android:label="Trading"/>
-        <activity android:name=".BuyPopUp"
-            android:label="Trading"/>
+        <activity
+            android:name=".SellConfirm"
+            android:label="Trading" />
+        <activity
+            android:name=".SellPopUp"
+            android:label="Trading" />
+        <activity
+            android:name=".BuyConfirm"
+            android:label="Trading" />
+        <activity
+            android:name=".BuyPopUp"
+            android:label="Trading" />
         <activity
             android:name=".Register"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -47,16 +60,13 @@
         <activity
             android:name=".Login"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".Trade"
-            android:label="Trading"/>
-        <activity android:name=".PortfolioActivity"
-            android:label="Portfolio"/>
+        <activity
+            android:name=".Trade"
+            android:label="Trading" />
+        <activity
+            android:name=".PortfolioActivity"
+            android:label="Portfolio" />
     </application>
 
 </manifest>
