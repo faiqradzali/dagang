@@ -31,14 +31,17 @@
             android:id="@+id/nav_portfolio"
             android:icon="@drawable/ic_portfolio_white"
             android:title="Portfolio" />
+
+        <item
+            android:id="@+id/nav_opencds"
+            android:icon="@drawable/ic_cds_white"
+            android:title="Open CDS Account" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout_white"
+            android:title="Logout" />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_logout_white"
-                android:title="Logout" />
-        </menu>
-    </item>
+    
 </menu>

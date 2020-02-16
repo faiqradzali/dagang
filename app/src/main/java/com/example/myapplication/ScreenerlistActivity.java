@@ -32,7 +32,7 @@ public class ScreenerlistActivity extends BaseActivity {
 
     private void initStockName(){
         Log.d(TAG, "initStockName: Populating stock list");
-        mNames.addAll(Arrays.asList("All-Time High", "Parabolic SAR Rising"));
+        mNames.addAll(Arrays.asList("Short Term Predicted Uptrend (AI)", "All-Time High", "Parabolic SAR Rising", "MA Cross", "RSI Oversold", "Stochastic Oversold", "Bullish Engulfing", "Hammer", "52w Breakout"));
         mNamesFull.addAll(mNames);
 
         initRecyclerView();

@@ -67,6 +67,9 @@
         <activity
             android:name=".PortfolioActivity"
             android:label="Portfolio" />
+        <activity
+            android:name=".OpenAccountActivity"
+            android:label="Open CDS Account" />
     </application>
 
 </manifest>

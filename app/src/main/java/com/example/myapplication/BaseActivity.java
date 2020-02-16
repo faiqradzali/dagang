@@ -145,6 +145,13 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
                 Intent intent5 = new Intent(this,PortfolioActivity.class);
                 this.startActivity(intent5);// do whatever
                 break;
+            case R.id.nav_opencds:
+                Intent intent6 = new Intent(this,OpenAccountActivity.class);
+                this.startActivity(intent6);// do whatever
+                break;
+            case R.id.nav_logout:
+                sessionManager.logout();
+                break;
 
             // and so on...
         }
