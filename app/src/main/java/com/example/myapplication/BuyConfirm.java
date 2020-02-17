@@ -61,8 +61,8 @@ public class BuyConfirm extends BaseActivity {
         balance = intent.getStringExtra("balance");
 
         view_stock_name.setText(stock_name);
-        view_bal.setText(balance);
-        view_total.setText(totalPrice);
+        view_bal.setText("RM" +balance);
+        view_total.setText("RM" +totalPrice);
         view_total_size.setText(stock_size);
 
         HashMap<String, String> user = sessionManager.getUserDetail();

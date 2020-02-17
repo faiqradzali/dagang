@@ -11,10 +11,11 @@ public class LogObject {
     private String type;
     private String notes;
 
-    public LogObject(){}
+    public LogObject() {
+    }
 
 
-    public String getDocumentID(){
+    public String getDocumentID() {
         return documentID;
     }
 
@@ -22,24 +23,24 @@ public class LogObject {
         this.documentID = documentID;
     }
 
-    public LogObject(String currentDate, String stock_name, String close, String size, String type){
+    public LogObject(String currentDate, String stock_name, String close, String size, String type) {
         this.currentDate = currentDate;
-        this.close=close;
-        this.size=size;
-        this.stock_name=stock_name;
-        this.type=type;
+        this.close = close;
+        this.size = size;
+        this.stock_name = stock_name;
+        this.type = type;
     }
 
-    public LogObject(String docId,String currentDate, String stock_name, String close, String size, String type){
+    public LogObject(String docId, String currentDate, String stock_name, String close, String size, String type) {
         this.documentID = docId;
         this.currentDate = currentDate;
-        this.close=close;
-        this.size=size;
-        this.stock_name=stock_name;
-        this.type=type;
+        this.close = close;
+        this.size = size;
+        this.stock_name = stock_name;
+        this.type = type;
     }
 
-    public String getCurrentDate(){
+    public String getCurrentDate() {
         return currentDate;
     }
 
@@ -63,3 +64,4 @@ public class LogObject {
         return notes;
     }
 }
+

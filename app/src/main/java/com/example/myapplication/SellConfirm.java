@@ -56,9 +56,9 @@ public class SellConfirm extends BaseActivity {
         Log.d("money: ", balance);
 
         view_stock_name.setText(stock_name);
-        view_total.setText(totalPrice);
+        view_total.setText("RM " +totalPrice);
         view_total_size.setText(stock_size);
-        view_bal.setText(balance);
+        view_bal.setText("RM " + balance);
 
 
 

@@ -76,4 +76,6 @@ public class NoteActivity extends BaseActivity {
         Intent i = new Intent(getApplicationContext(), LogActivity.class);
         startActivity(i);
     }
+
+
 }

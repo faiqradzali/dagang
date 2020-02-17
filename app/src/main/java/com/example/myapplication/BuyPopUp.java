@@ -64,12 +64,14 @@ public class BuyPopUp extends BaseActivity {
         final TextView view_low = findViewById(R.id.lowValue);
         final TextView view_high = findViewById(R.id.highValue);
         final TextView view_buy = findViewById(R.id.buyValue);
+        final TextView view_bal = findViewById(R.id.buyValue2);
 
         currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
 
         sessionManager = new SessionManager(this);
         user = sessionManager.getUserDetail();
+        mName = user.get(sessionManager.NAME);
 //        Log.d("Money", mMoney);
         final Intent intent = getIntent();
         stock_name = intent.getStringExtra("stock");
@@ -83,7 +85,23 @@ public class BuyPopUp extends BaseActivity {
         view_open.setText(open);
         view_high.setText(high);
         view_low.setText(low);
-        view_buy.setText(close);
+        view_buy.setText("RM " +close);
+
+        db.collection("user_accounts").document(mName).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                String mTradingLimit = documentSnapshot.getString("capital");
+
+
+                                double doubleTradingLimit = Double.parseDouble(mTradingLimit);
+                                view_bal.setText("RM "+String.format("%.2f", doubleTradingLimit));
+                            }
+                        }
+                    }
+                });
     }
 
     public void goToConfirm(View view){

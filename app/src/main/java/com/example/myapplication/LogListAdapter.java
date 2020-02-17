@@ -37,7 +37,7 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
 
     public View getView(int position, View convertView, final ViewGroup parent) {
         convertView = mInflater.inflate(mViewResourceId, null);
-        ImageButton noteBtn = (ImageButton) convertView.findViewById(R.id.simpleImageButton);
+        Button noteBtn = (Button) convertView.findViewById(R.id.allClick);
 
         LogObject logObject = logList.get(position);
         Log.d("test", logObject.getCurrentDate());
@@ -53,9 +53,14 @@ public class LogListAdapter extends ArrayAdapter<LogObject> {
             TextView tvSize = convertView.findViewById(R.id.log_size);
             TextView tvType = convertView.findViewById(R.id.log_type);
 
+            Double closed = Double.parseDouble(logObject.getClose());
+            Integer closedSize = Integer.parseInt(logObject.getSize());
+            Double totalPrice = closed*closedSize;
+
+
             tvDate.setText(logObject.getCurrentDate());
             tvStock.setText(logObject.getStock_name());
-            tvPrice.setText("RM "+logObject.getClose());
+            tvPrice.setText("RM "+String.format("%.2f", totalPrice));
             tvSize.setText(logObject.getSize()+" units");
             tvType.setText(logObject.getType());
 

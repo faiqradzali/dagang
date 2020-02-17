@@ -60,7 +60,6 @@ public class Dashboard extends BaseActivity {
 
         name = findViewById(R.id.text_name);
         capital = findViewById(R.id.d_trading_limit);
-        btn_logout = findViewById(R.id.logoutBtn);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         mName = user.get(sessionManager.NAME);
@@ -77,7 +76,7 @@ public class Dashboard extends BaseActivity {
 
 
                                 double doubleTradingLimit = Double.parseDouble(mTradingLimit);
-                                capital.setText("Trading Limit :"+String.format("%.2f", doubleTradingLimit));
+                                capital.setText("Trading Limit: "+"RM " +String.format("%.2f", doubleTradingLimit));
                             }
                         }
                     }
@@ -88,12 +87,6 @@ public class Dashboard extends BaseActivity {
 
         FBMIndexGraph();
 
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionManager.logout();
-            }
-        });
 
     }
 

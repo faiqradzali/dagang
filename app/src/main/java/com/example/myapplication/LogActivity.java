@@ -33,7 +33,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import static java.lang.Integer.parseInt;
@@ -48,28 +53,6 @@ public class LogActivity extends BaseActivity {
     SessionManager sessionManager;
     ArrayList<LogObject> LogList = new ArrayList<>();
     private DocumentReference docRef;
-
-    public void generateLog(String docID, String date, String stock,String price,String size,String type){
-        final String log_ID =  docID;
-        final String log_date = date;
-        final String log_stock = stock;
-        final String log_price= price;
-        final String log_size = size;
-        final String log_type = type;
-
-        Log.d("Name passed " , log_stock);
-        LogObject logs = new LogObject(log_date,log_stock,log_price,log_size,log_type);
-        LogList.add(logs);
-
-
-        LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
-
-        listView = (ListView) findViewById(R.id.list_view_log);
-        listView.setAdapter(adapter);
-
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +88,12 @@ public class LogActivity extends BaseActivity {
                             }
 
                         }
+                        Collections.sort(LogList, new Comparator<LogObject>() {
+                            @Override
+                            public int compare(LogObject u1, LogObject u2) {
+                                return u2.getCurrentDate().compareTo(u1.getCurrentDate());
+                            }
+                        });
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
                         listView.setAdapter(adapter);
@@ -114,6 +103,7 @@ public class LogActivity extends BaseActivity {
                 });
 
     }
+
 }
 
 

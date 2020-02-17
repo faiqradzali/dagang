@@ -6,6 +6,8 @@
     android:layout_height="fill_parent"
     android:weightSum="100">
 
+
+
     <TextView
         android:id="@+id/log_date"
         android:layout_width="wrap_content"
@@ -97,6 +99,16 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/allClick"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00FFFFFF"
+        android:onClick="gotoNotes"
+        app:layout_constraintBottom_toBottomOf="@+id/log_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/simpleImageButton"
@@ -109,5 +121,7 @@
         android:onClick="gotoNotes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,10 +10,9 @@
     <TextView
         android:id="@+id/whiteBg"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="330dp"
         android:layout_margin="20dp"
         android:background="@drawable/rectangle_6"
-        app:layout_constraintBottom_toTopOf="@+id/d_trading_limit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -83,35 +82,22 @@
         app:layout_constraintStart_toEndOf="@+id/welcome"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-
-        android:background="@drawable/button"
-        android:text="LOGOUT"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/d_trading_limit"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:padding="3dp"
 
-        android:layout_marginTop="384dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/rectangle_12"
-
         android:gravity="center"
+        android:padding="3dp"
         android:text="10000.21"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/whiteBg"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
 
     <Button
         android:id="@+id/buttonStocks"
@@ -132,9 +118,8 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="2dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:background="#E58B88"
         android:drawableTop="@drawable/ic_screener"
         android:onClick="goScreener"
@@ -147,7 +132,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="#70AE98"
         android:drawableTop="@drawable/ic_portfolio"
         android:onClick="goPortfolio"
@@ -155,7 +140,7 @@
         app:layout_constraintEnd_toEndOf="@+id/whiteBg"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buttonLog"
-        app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
+        app:layout_constraintTop_toBottomOf="@+id/d_trading_limit" />
 
     <Button
         android:id="@+id/buttonLog"
@@ -163,13 +148,13 @@
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:background="#ECBE7A"
         android:drawableTop="@drawable/ic_log"
         android:onClick="goLog"
         android:text=" LOG"
         app:layout_constraintStart_toStartOf="@+id/whiteBg"
-        app:layout_constraintTop_toBottomOf="@+id/whiteBg" />
+        app:layout_constraintTop_toBottomOf="@+id/d_trading_limit" />
 
     <TextView
         android:id="@+id/textView17"
