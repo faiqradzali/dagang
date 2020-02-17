@@ -61,6 +61,7 @@ public class SellPopUp extends BaseActivity {
         final TextView view_high = findViewById(R.id.highValue);
         final TextView view_buy = findViewById(R.id.buyValue);
         final TextView view_bal = findViewById(R.id.buyValue2);
+        final TextView view_size = findViewById(R.id.textView19);
 
         currentDate = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
@@ -94,6 +95,19 @@ public class SellPopUp extends BaseActivity {
 
                                 double doubleTradingLimit = Double.parseDouble(mTradingLimit);
                                 view_bal.setText("RM "+String.format("%.2f", doubleTradingLimit));
+                            }
+                        }
+                    }
+                });
+
+        db.collection("user_accounts").document(mName).collection("portfolio").document(stock_name).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot != null) {
+                                String mSize = documentSnapshot.getString("size");
+                                view_size.setText(mSize);
                             }
                         }
                     }
