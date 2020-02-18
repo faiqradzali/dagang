@@ -34,6 +34,7 @@ public class ScreenerDetailActivity extends BaseActivity{
 
     private static final String KEY_SCREENER = "detection";
     private static final String KEY_DESC = "description";
+    private static final String KEY_TIME = "timestamp";
 
     TextView screenerName, description;
     //    @Override
@@ -48,12 +49,14 @@ public class ScreenerDetailActivity extends BaseActivity{
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             if (documentSnapshot != null) {
-                                String desc = documentSnapshot.getString(KEY_DESC);
+                                String desc = documentSnapshot.getString(KEY_DESC) + " Last updated: " + documentSnapshot.getString(KEY_TIME);
+
 
                                 screenerName = findViewById(R.id.sd_screener_name);
                                 screenerName.setText(screener_name);
                                 description = findViewById(R.id.sd_screener_desc);
                                 description.setText(desc);
+
                             }
                         }
                     }

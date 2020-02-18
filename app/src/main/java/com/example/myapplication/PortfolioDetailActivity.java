@@ -56,7 +56,7 @@ public class PortfolioDetailActivity extends BaseActivity {
         double cost_value = d_buyPrice * d_lotSize;
         double market_value = d_closePrice * d_lotSize;
         double profit_rm = market_value-cost_value;
-        double profit_percent = profit_rm/cost_value;
+        double profit_percent = profit_rm/cost_value*100;
 
         costValue = findViewById(R.id.pd_cost);
         costValue.setText(""+cost_value);

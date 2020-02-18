@@ -59,6 +59,5 @@ public class SessionManager {
         editor.commit();
         Intent i = new Intent(context, Login.class);
         context.startActivity(i);
-        ((Dashboard) context).finish();
     }
 }

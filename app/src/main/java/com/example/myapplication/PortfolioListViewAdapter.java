@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.firebase.firestore.auth.User;
 
+import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 
 public class PortfolioListViewAdapter extends ArrayAdapter<PortfolioObject> {
@@ -44,12 +46,16 @@ public class PortfolioListViewAdapter extends ArrayAdapter<PortfolioObject> {
             stockName.setText(portfolioObject.getStock());
             lotSize.setText(portfolioObject.getLotSize());
 
-            double buy_price=Double.parseDouble(portfolioObject.getBuyPrice());
+
+            DecimalFormat decim = new DecimalFormat("0.000");
+
+            double buy_price=Double.parseDouble(decim.format(Double.parseDouble(portfolioObject.getBuyPrice())));
+            double close_price=Double.parseDouble(decim.format(Double.parseDouble(portfolioObject.getClose())));
             double lot_size=Double.parseDouble(portfolioObject.getLotSize());
-            double close_price=Double.parseDouble(portfolioObject.getClose());
+
 
             double profitCalc = (close_price*lot_size) - (buy_price*lot_size);
-            double percentCalc = profitCalc/(buy_price*lot_size);
+            double percentCalc = profitCalc/(buy_price*lot_size)*100;
 
             if (profitCalc > 0) {
                 profitValue.setTextColor(Color.parseColor("#12e34a") );

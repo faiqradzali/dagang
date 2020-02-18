@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -118,7 +119,7 @@ public class PortfolioActivity extends BaseActivity {
                                 viewInvestmentValue.setText(String.format("%.2f", totalValue));
                                 viewAccValue.setText(String.format("%.2f", accValue));
                                 viewProfit.setText(String.format("%.2f", totalProfit));
-
+                                nDialog.hide();
 
 
                                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,7 +128,6 @@ public class PortfolioActivity extends BaseActivity {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         portfolioList.get(position);
                                         Toast.makeText(PortfolioActivity.this, portfolioList.get(position).getStock(), Toast.LENGTH_SHORT).show();
-
                                         Intent intent =  new Intent(PortfolioActivity.this, PortfolioDetailActivity.class);
                                         intent.putExtra("StockName", portfolioList.get(position).getStock());
                                         intent.putExtra("ClosePrice", portfolioList.get(position).getClose());
@@ -186,6 +186,13 @@ public class PortfolioActivity extends BaseActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mName = user.get(sessionManager.NAME);
+
+        nDialog = new ProgressDialog(PortfolioActivity.this);
+        nDialog.setMessage("Populating portfolio..");
+        nDialog.setTitle("Loading..");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
         
 
         db.collection("user_accounts").document(mName).get()

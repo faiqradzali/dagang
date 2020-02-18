@@ -150,6 +150,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MenuItem
                 this.startActivity(intent6);// do whatever
                 break;
             case R.id.nav_logout:
+                Intent intent7 = new Intent(this, Dashboard.class);
+                this.startActivity(intent7);
                 sessionManager.logout();
                 break;
 

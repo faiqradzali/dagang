@@ -55,10 +55,13 @@ public class StocklistRecyclerViewAdapter extends RecyclerView.Adapter<Stocklist
             @Override
             public void onClick (View view) {
                 Log.d(TAG, "onClick RVA: clicked on: " + mStockName.get(position));
-
-                Toast.makeText(mContext, mStockName.get(position), Toast.LENGTH_SHORT).show();
+                String stockName = mStockName.get(position);
+                if (mStockName.get(position).contains(" ")) {
+                    stockName = mStockName.get(position).substring(0, mStockName.get(position).indexOf(' '));
+                }
+                Toast.makeText(mContext, stockName, Toast.LENGTH_SHORT).show();
                 Intent intent =  new Intent(mContext, Trade.class);
-                intent.putExtra("Stock", mStockName.get(position));
+                intent.putExtra("Stock", stockName);
                 mContext.startActivity(intent);
             }
         });
