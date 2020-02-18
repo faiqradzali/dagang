@@ -53,11 +53,19 @@ public class LogActivity extends BaseActivity {
     SessionManager sessionManager;
     ArrayList<LogObject> LogList = new ArrayList<>();
     private DocumentReference docRef;
+    ProgressDialog nDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+
+        nDialog = new ProgressDialog(LogActivity.this);
+        nDialog.setMessage("Retrieving trade history..");
+        nDialog.setTitle("Loading..");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
 
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
@@ -96,6 +104,7 @@ public class LogActivity extends BaseActivity {
                         });
                         LogListAdapter adapter = new LogListAdapter(getApplicationContext(), R.layout.layout_log_list, LogList);
                         listView = (ListView) findViewById(R.id.list_view_log);
+                        nDialog.hide();
                         listView.setAdapter(adapter);
                         listView.setEmptyView(findViewById(R.id.emptyElement));
 

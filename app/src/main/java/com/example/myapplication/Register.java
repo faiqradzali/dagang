@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
     private static final String TAG = "Register";
-
+    ProgressDialog nDialog;
     private static final String KEY_USER = "username";
     private static final String KEY_PASS = "password";
     private static final String KEY_EMAIL = "email";
@@ -46,6 +47,12 @@ public class Register extends AppCompatActivity {
 
 
         try {
+            nDialog = new ProgressDialog(Register.this);
+            nDialog.setMessage("Verifying registration details..");
+            nDialog.setTitle("Registering..");
+            nDialog.setIndeterminate(false);
+            nDialog.setCancelable(true);
+            nDialog.show();
             String user = editTextUser.getText().toString();
             String pass = editTextPass.getText().toString();
             String email = editTextEmail.getText().toString();
@@ -61,6 +68,7 @@ public class Register extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            nDialog.hide();
                             Toast.makeText(Register.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), Login.class);
                             startActivity(i);
@@ -69,11 +77,13 @@ public class Register extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            nDialog.hide();
                             Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, e.toString());
                         }
                     });
         } catch (Exception e) {
+            nDialog.hide();
             Toast.makeText(Register.this, "No register details", Toast.LENGTH_SHORT).show();
             Log.d(TAG, e.toString());
         }

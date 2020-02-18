@@ -62,12 +62,19 @@ public class Trade extends BaseActivity {
     private static final String KEY_STOCK = "stock";
     private static final String KEY_TYPE = "type";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    ProgressDialog nDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
+
+        nDialog = new ProgressDialog(Trade.this);
+        nDialog.setMessage("Constructing charts..");
+        nDialog.setTitle("Loading..");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
 
         final TextView view_close = findViewById(R.id.closeValue);
         final TextView view_open = findViewById(R.id.openValue);
@@ -189,6 +196,7 @@ public class Trade extends BaseActivity {
                             CandleData data = new CandleData(set1);
 
                             // set data
+
                             candleStickChart.setData(data);
                             candleStickChart.invalidate();
 
@@ -240,6 +248,7 @@ public class Trade extends BaseActivity {
                                             }
                                         }
                                     });
+                            nDialog.hide();
 
                         } catch (JSONException e) {
                             Log.d("Error", "hehe");
